@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.Smear", "fi.csc.smear.db.service", "smart-smear-portlet");

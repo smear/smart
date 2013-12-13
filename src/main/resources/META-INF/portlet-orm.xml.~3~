@@ -1,0 +1,474 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.HydemetaModelImpl">
+		<attributes>
+			<id name="samptime">
+				<temporal>TIMESTAMP</temporal>
+			</id>
+			<basic name="UV_A" />
+			<basic name="UV_B" />
+			<basic name="diffPAR" />
+			<basic name="diffGLOB" />
+			<basic name="dirGLOB" />
+			<basic name="Net" />
+			<basic name="RGlob" />
+			<basic name="Glob" />
+			<basic name="RPAR" />
+			<basic name="PAR" />
+			<basic name="dirPAR" />
+			<basic name="canIR" />
+			<basic name="skyIR" />
+			<basic name="Precip" />
+			<basic name="SWS" />
+			<basic name="Td" />
+			<basic name="Pamb0" />
+			<basic name="T672" />
+			<basic name="T504" />
+			<basic name="T336" />
+			<basic name="T168" />
+			<basic name="T84" />
+			<basic name="T42" />
+			<basic name="WS672" />
+			<basic name="WS504" />
+			<basic name="WS336" />
+			<basic name="WS168" />
+			<basic name="WS84" />
+			<basic name="WS42" />
+			<basic name="WSU740" />
+			<basic name="WSU336" />
+			<basic name="WSU168" />
+			<basic name="WSU84" />
+			<basic name="WD" />
+			<basic name="WD504" />
+			<basic name="WD336" />
+			<basic name="WD168" />
+			<basic name="WDU740" />
+			<basic name="WDU336" />
+			<basic name="WDU168" />
+			<basic name="WDU84" />
+			<basic name="NO672" />
+			<basic name="NO504" />
+			<basic name="NO336" />
+			<basic name="NO168" />
+			<basic name="NO84" />
+			<basic name="NO42" />
+			<basic name="NOx672" />
+			<basic name="NOx504" />
+			<basic name="NOx336" />
+			<basic name="NOx168" />
+			<basic name="NOx84" />
+			<basic name="NOx42" />
+			<basic name="O3672" />
+			<basic name="O3504" />
+			<basic name="O3336" />
+			<basic name="O3168" />
+			<basic name="O384" />
+			<basic name="O342" />
+			<basic name="SO2672" />
+			<basic name="SO2504" />
+			<basic name="SO2336" />
+			<basic name="SO2168" />
+			<basic name="SO284" />
+			<basic name="SO242" />
+			<basic name="H2O672" />
+			<basic name="H2O504" />
+			<basic name="H2O336" />
+			<basic name="H2O168" />
+			<basic name="H2O84" />
+			<basic name="H2O42" />
+			<basic name="CO2672" />
+			<basic name="CO2504" />
+			<basic name="CO2336" />
+			<basic name="CO2168" />
+			<basic name="CO284" />
+			<basic name="CO242" />
+			<basic name="H2S672" />
+			<basic name="H2S504" />
+			<basic name="H2S336" />
+			<basic name="H2S168" />
+			<basic name="H2S84" />
+			<basic name="H2S42" />
+			<basic name="RHIRGA672" />
+			<basic name="RHIRGA504" />
+			<basic name="RHIRGA336" />
+			<basic name="RHIRGA168" />
+			<basic name="RHIRGA84" />
+			<basic name="RHIRGA42" />
+			<basic name="CO672" />
+			<basic name="CO504" />
+			<basic name="CO336" />
+			<basic name="CO168" />
+			<basic name="CO84" />
+			<basic name="CO42" />
+			<basic name="RHTd" />
+			<basic name="PTG" />
+			<basic name="Visibility" />
+			<basic name="Visibilitymin" />
+			<basic name="Visibilitymax" />
+			<basic name="Precipint" />
+			<basic name="Precipintmin" />
+			<basic name="Precipintmax" />
+			<basic name="Precipacc" />
+			<basic name="Snowfallacc" />
+			<basic name="wthcode" />
+			<basic name="wthcodemin" />
+			<basic name="wthcodemax" />
+			<basic name="tsoil_humus" />
+			<basic name="tsoil_A" />
+			<basic name="tsoil_B1" />
+			<basic name="tsoil_B2" />
+			<basic name="tsoil_C1" />
+			<basic name="H2OTd" />
+			<basic name="CO2_storage_flux" />
+			<basic name="wsoil_humus" />
+			<basic name="wsoil_A" />
+			<basic name="wsoil_B1" />
+			<basic name="wsoil_B2" />
+			<basic name="wsoil_C1" />
+			<basic name="LWin" />
+			<basic name="LWout" />
+			<basic name="PRI" />
+			<basic name="NDVI" />
+			<basic name="BNDVI" />
+			<basic name="canPARvar" />
+			<basic name="canPAR1" />
+			<basic name="canPAR2" />
+			<basic name="canPAR3" />
+			<basic name="maaPAR" />
+			<basic name="maaNet" />
+			<basic name="PAR2" />
+			<basic name="Globmast" />
+			<basic name="WDU672" />
+			<basic name="WSU672" />
+			<basic name="RGlob125" />
+			<basic name="CH4168" />
+			<basic name="CH4672" />
+			<basic name="CH41250" />
+			<basic name="T1250" />
+			<basic name="wpsoil_A" />
+			<basic name="wpsoil_B" />
+			<basic name="runoff1" />
+			<basic name="runoff2" />
+			<basic name="drainage1" />
+			<basic name="CO2icos168" />
+			<basic name="CO2icos672" />
+			<basic name="CO2icos1250" />
+			<basic name="H2Oicos168" />
+			<basic name="H2Oicos672" />
+			<basic name="H2Oicos1250" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.KumpulametaModelImpl">
+		<attributes>
+			<id name="samptime">
+				<temporal>TIMESTAMP</temporal>
+			</id>
+			<basic name="t" />
+			<basic name="dp" />
+			<basic name="rh" />
+			<basic name="p" />
+			<basic name="ws" />
+			<basic name="wdir" />
+			<basic name="rmm" />
+			<basic name="p0" />
+			<basic name="glob" />
+			<basic name="par" />
+			<basic name="skyir" />
+			<basic name="pwd_visibility_1" />
+			<basic name="pwd_visibility_10" />
+			<basic name="pwd_wmo_0" />
+			<basic name="pwd_wmo_15" />
+			<basic name="pwd_wmo_60" />
+			<basic name="pwd_intensity_w" />
+			<basic name="pwd_rmm" />
+			<basic name="pwd_smm" />
+			<basic name="pwd_nws" />
+			<basic name="Tower_T_4m" />
+			<basic name="Tower_T_8m" />
+			<basic name="Tower_T_16m" />
+			<basic name="Tower_T_32m" />
+			<basic name="Tower_WS_32m" />
+			<basic name="Tower_WS_16m" />
+			<basic name="Tower_WS_8m" />
+			<basic name="Tower_WS_4m" />
+			<basic name="Tower_WDIR_32m" />
+			<basic name="Tower_WDIR_16m" />
+			<basic name="Tower_WDIR_8m" />
+			<basic name="Tower_WDIR_4m" />
+			<basic name="Tower_PAR_32m" />
+			<basic name="Tower_PAR_REFL_32m" />
+			<basic name="Tower_GLOB_32m" />
+			<basic name="Tower_GLOB_REFL_32m" />
+			<basic name="Tower_IR_32m" />
+			<basic name="Tower_IR_REFL_32m" />
+			<basic name="Tower_VT_4m" />
+			<basic name="Tower_VT_8m" />
+			<basic name="Tower_VT_16m" />
+			<basic name="Tower_VT_32m" />
+			<basic name="O_3" />
+			<basic name="NO" />
+			<basic name="NO_x" />
+			<basic name="SO_2" />
+			<basic name="CO" />
+			<basic name="Tower_WS_MAX_32m" />
+			<basic name="Tower_WS_MAX_16m" />
+			<basic name="Tower_WS_MAX_8m" />
+			<basic name="Tower_WS_MAX_4m" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearEventsModelImpl">
+		<attributes>
+			<id name="eventID" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="event" />
+			<basic name="etimestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearmetadataModelImpl">
+		<attributes>
+			<id name="title" />
+			<basic name="rightsCategory" />
+			<basic name="access_rights" />
+			<basic name="project" />
+			<basic name="maintaining_organisation" />
+			<basic name="contact" />
+			<basic name="ref" />
+			<basic name="creator" />
+			<basic name="discipline" />
+			<basic name="timestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearstationModelImpl">
+		<attributes>
+			<id name="stationID" />
+			<basic name="dcmipoint" />
+			<basic name="name" />
+			<basic name="dataAvail" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearTableMetadataModelImpl">
+		<attributes>
+			<id name="tableID" />
+			<basic name="identifier" />
+			<basic name="title" />
+			<basic name="spatial_coverage" />
+			<basic name="name" />
+			<basic name="ttimestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearTagsModelImpl">
+		<id-class class="fi.csc.smear.db.service.persistence.SmearTagsPK" />
+		<attributes>
+			<id name="tagID" />
+			<id name="vocabulary" />
+			<basic name="tag" />
+			<basic name="displaykeyword" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearvariableEventModelImpl">
+		<attributes>
+			<id name="variableID" />
+			<basic name="eventID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearVariableMetadataModelImpl">
+		<attributes>
+			<id name="variableID" />
+			<basic name="variable" />
+			<basic name="description" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="unit" />
+			<basic name="title" />
+			<basic name="source" />
+			<basic name="period_start">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="period_end">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="coverage" />
+			<basic name="rights" />
+			<basic name="mandatory" />
+			<basic name="derivative" />
+			<basic name="vtimestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.SmearvariableTagsModelImpl">
+		<attributes>
+			<id name="variableID" />
+			<basic name="tagID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="fi.csc.smear.db.model.impl.VarriometaModelImpl">
+		<attributes>
+			<id name="SAMPTIME">
+				<temporal>TIMESTAMP</temporal>
+			</id>
+			<basic name="WS0" />
+			<basic name="WS1" />
+			<basic name="WS2" />
+			<basic name="WS3" />
+			<basic name="WS4" />
+			<basic name="RMM" />
+			<basic name="TLOG" />
+			<basic name="PAR" />
+			<basic name="GLOB" />
+			<basic name="REFL" />
+			<basic name="NET" />
+			<basic name="UVA" />
+			<basic name="UVB" />
+			<basic name="UVAT" />
+			<basic name="UVBT" />
+			<basic name="BAR" />
+			<basic name="RAIN" />
+			<basic name="TDRY0" />
+			<basic name="TWET0" />
+			<basic name="TDRY1" />
+			<basic name="TWET1" />
+			<basic name="TDRY2" />
+			<basic name="TWET2" />
+			<basic name="TDRY3" />
+			<basic name="TWET3" />
+			<basic name="TDRY4" />
+			<basic name="TWET4" />
+			<basic name="ST" />
+			<basic name="WDIR" />
+			<basic name="CPC1" />
+			<basic name="O3_0" />
+			<basic name="O3_1" />
+			<basic name="O3_2" />
+			<basic name="O3_3" />
+			<basic name="O3_4" />
+			<basic name="SO2_0" />
+			<basic name="SO2_1" />
+			<basic name="SO2_2" />
+			<basic name="SO2_3" />
+			<basic name="SO2_4" />
+			<basic name="NO_0" />
+			<basic name="NO_1" />
+			<basic name="NO_2" />
+			<basic name="NO_4" />
+			<basic name="NOX_0" />
+			<basic name="NOX_1" />
+			<basic name="NOX_2" />
+			<basic name="NOX_4" />
+			<basic name="P" />
+			<basic name="HUM_RH" />
+			<basic name="HUM_T" />
+			<basic name="temp" />
+			<basic name="WS00" />
+			<basic name="visibility" />
+			<basic name="rainint" />
+			<basic name="rainintmax" />
+			<basic name="rainintmin" />
+			<basic name="Precipacc" />
+			<basic name="wthcodemin" />
+			<basic name="wthcodemax" />
+			<basic name="haildiammax" />
+			<basic name="snowint" />
+			<basic name="snowintmin" />
+			<basic name="snowintmax" />
+			<basic name="visibilitylpm" />
+			<basic name="visibilitylpmmin" />
+			<basic name="visibilitylpmmax" />
+			<basic name="wthcode" />
+			<basic name="CO_1" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="fi.csc.smear.db.model.impl.HydemetaImpl" name="Hydemeta">
+		<table name="HYY_META" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.KumpulametaImpl" name="Kumpulameta">
+		<table name="KUM_META" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearEventsImpl" name="SmearEvents">
+		<table name="Events" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearmetadataImpl" name="Smearmetadata">
+		<table name="Metadata" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearstationImpl" name="Smearstation">
+		<table name="station" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearTableMetadataImpl" name="SmearTableMetadata">
+		<table name="TableMetadata" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearTagsImpl" name="SmearTags">
+		<table name="Tags" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearvariableEventImpl" name="SmearvariableEvent">
+		<table name="variableEvent" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearVariableMetadataImpl" name="SmearVariableMetadata">
+		<table name="VariableMetadata" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.SmearvariableTagsImpl" name="SmearvariableTags">
+		<table name="variableTags" />
+		<attributes />
+	</entity>
+	<entity class="fi.csc.smear.db.model.impl.VarriometaImpl" name="Varriometa">
+		<table name="VAR_META" />
+		<attributes />
+	</entity>
+</entity-mappings>
