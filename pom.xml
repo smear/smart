@@ -5,7 +5,7 @@
 	    <artifactId>liferay-maven-plugins-sdk</artifactId>
 	    <groupId>fi.csc.avaa.plugins</groupId>
 	    <version>1.0</version>
-	    <relativePath>../../../pom.xml</relativePath>
+	    <relativePath>../parentPOM/pom.xml</relativePath>
 	</parent>
 	<groupId>fi.csc.smear.smartsmear</groupId>
 	<artifactId>smart-smear-portlet</artifactId>
