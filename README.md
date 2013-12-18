@@ -1,3 +1,6 @@
+smartSmear-portlet
+==================
+
 This is source code of the smartSmear-portlet from http://avaa.tdata.fi/web/smart/smear page.
 
 SmartSMEAR is data visualization and download tool for the database of continuous atmospheric, flux, soil, tree physiological and water quality measurements at SMEAR research stationsof the University of Helsinki. 
