@@ -1,0 +1,16 @@
+You can copy smartSmear source code by commands
+git clone https://github.com/smear/parentPOM.git
+git clone https://github.com/smear/map-portlet.git
+git clone https://github.com/smear/smart.git
+
+You can compile smartSmear by commands
+mvn liferay:build-service
+mvn package
+
+Maven is available
+http://maven.apache.org/download.cgi
+and requires java. We recommeded to use our operating system package management
+to install git (for example: yum install git or apt-get install git)
+but without sudo rights be free to download from  
+http://git-scm.com/downloads
+
