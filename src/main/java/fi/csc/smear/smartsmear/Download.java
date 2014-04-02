@@ -121,6 +121,7 @@ public class Download {
 		    
 			if (quality == "CHECKED"){
 				emep.add(var+"_EMEP");
+				emep.add(var);
 				this.qset = db.avg(emep, tablestr, start.getTime(), end.getTime(), readAVG(this.avg), readAVGtype(typeOfAVG));					
 				emep.clear();
 				if (null == this.qset){
@@ -129,11 +130,13 @@ public class Download {
                 		    Notification.TYPE_WARNING_MESSAGE, true)
                 		    .show(Page.getCurrent());
 				} else {
-					try{
+				    try {
 					while (this.qset.next()){
-						if (this.qset.getString(2) == null){
+					    if ((this.qset.getString(3) != null) && 
+						(this.qset.getString(2) == null)){
 						setok = false;
-					}}	
+					    }
+					}	
 					if (setok){
 						finalset.add(var);
 						tableset.add(tablestr);
