@@ -132,9 +132,11 @@ public class Download {
 				} else {
 				    try {
 					while (this.qset.next()){
-					    if ((this.qset.getString(3) != null) && 
-						(this.qset.getString(2) == null)){
-						setok = false;
+					    if (this.qset.getString(3) != null) {
+						if ((this.qset.getString(2) == null) || 
+						    (this.qset.getInt(2) < 2 )) {
+						    setok = false;
+						}
 					    }
 					}	
 					if (setok){

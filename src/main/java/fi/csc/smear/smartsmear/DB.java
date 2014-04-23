@@ -56,7 +56,7 @@ public class DB {
 			sb.append(i.next());
 			sb.append(LOPPUSULUT[type]);
 		}
-		sb.append(" FROM " + kanta + " WHERE "+SAMPTIME+ " < ? AND "+SAMPTIME+ " > ?");
+		sb.append(" FROM " + kanta + " WHERE "+SAMPTIME+ " <= ? AND "+SAMPTIME+ " >= ?");
 		if (NONE != type) {
 			sb.append(" GROUP BY floor(timestampdiff(minute, '1990-1-1',  samptime) /? )");
 		}
@@ -139,7 +139,7 @@ public class DB {
 		for (int ind=1; ind<kanta.size();ind++ ){
 			sb.append(" LEFT OUTER JOIN "+kannat[ind]+" ON "+kannat[0]+"."+SAMPTIME+"="+kannat[ind]+"."+SAMPTIME);
 		}
-		sb.append(" WHERE "+kannat[0]+"."+SAMPTIME+ " < ? AND "+kannat[0]+"."+SAMPTIME+ " > ?");
+		sb.append(" WHERE "+kannat[0]+"."+SAMPTIME+ " <= ? AND "+kannat[0]+"."+SAMPTIME+ " >= ?");
 		if (NONE != type) {
 			sb.append(" GROUP BY floor(timestampdiff(minute, '1990-1-1',  samptime) /? )");
 		}
