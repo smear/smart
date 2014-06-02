@@ -38,13 +38,13 @@ import fi.csc.smear.db.service.SmearVariableMetadataLocalServiceUtil;
 public class Station  {
 	private static final long serialVersionUID = 4343017200085855933L;
 	public static final int VÄRRIÖ = 2;
-	public static final String Värriö = "Värriö Smear I";
+	public static final String Värriö = "Värriö SMEAR I";
 	public static final int HYYTIÄLÄ = 0;
-	public static final String Hyytiälä = "Hyytiälä Smear II";
-	public static final String Kumpula = "Kumpula Smear III";
+	public static final String Hyytiälä = "Hyytiälä SMEAR II";
+	public static final String Kumpula = "Kumpula SMEAR III";
 	public static final int KUMPULA = 1;
 	public static final int TORNI = 4;
-	public static final String Torni = "Torni";
+	public static final String Torni = "Helsinki Hotel Torni";
 	public static final int STATIONS = 5; //bigest station no + 1
 	//private static final String TABLES[] = {"", "VAR_META", "HYY_META", "", "KUM_META"};
 	public static final String ASEMAT[] = {Hyytiälä, Kumpula, Värriö, Torni};	

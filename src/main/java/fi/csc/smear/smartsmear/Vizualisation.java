@@ -292,21 +292,25 @@ public class Vizualisation  implements java.io.Serializable {
 	public Timeline co(Date start, Date end) {
 		Timeline timeline = createTimeline(WIDTH, HEIGHT);
 		timeline.setCaption("CO₂");
-		Float min = 300.0f;
-		Float max = 450.0f;
-		timeline.setVerticalAxisRange(min, max); 
-			IndexedContainer containerCO2168 = createIndexedContainer();
-			List<Hydemeta> data_h = getDataInRange(Hydemeta.class, start, end, "CO2168");
-			if (data_h != null && !data_h.isEmpty()) {
-				for (Hydemeta hydemeta: data_h) {
-					float f = hydemeta.getCO2168();
-					addItem(containerCO2168, hydemeta.getSamptime(), f); 
-				}
-				timeline.addGraphDataSource(containerCO2168, Timeline.PropertyId.TIMESTAMP, Timeline.PropertyId.VALUE);
-				timeline.setGraphCaption(containerCO2168, "Hyytiälä 16m");
-				timeline.setVerticalAxisLegendUnit(containerCO2168, "ppm");
-				timeline.setGraphOutlineColor(containerCO2168, Color.RED);
-			}
+		Float min = 390.0f;
+		Float max = 391.0f;
+		IndexedContainer containerCO2168 = createIndexedContainer();
+		List<Hydemeta> data_h = getDataInRange(Hydemeta.class, start, end, "CO2168");
+		if (data_h != null && !data_h.isEmpty()) {
+		    for (Hydemeta hydemeta: data_h) {
+			float f = hydemeta.getCO2168();
+			addItem(containerCO2168, hydemeta.getSamptime(), f);
+			min = Math.min(min, f);
+			max = Math.max(max, f);
+		    }
+		    min = (float)Math.floor(min);
+		    max = (float)Math.round(max+0.5);
+		    timeline.setVerticalAxisRange(min, max); 
+		    timeline.addGraphDataSource(containerCO2168, Timeline.PropertyId.TIMESTAMP, Timeline.PropertyId.VALUE);
+		    timeline.setGraphCaption(containerCO2168, "Hyytiälä 16m");
+		    timeline.setVerticalAxisLegendUnit(containerCO2168, "ppm");
+		    timeline.setGraphOutlineColor(containerCO2168, Color.RED);
+		}
 					// No co2 in kumpula?
 			//}
 		//if ((stations & Station.KUMPULA) > 0) {
