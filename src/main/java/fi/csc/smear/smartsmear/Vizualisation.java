@@ -5,6 +5,7 @@ package fi.csc.smear.smartsmear;
 
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Date;
@@ -659,11 +660,18 @@ public class Vizualisation  implements java.io.Serializable {
 				synchronized(dl.data) { 
 					data.beforeFirst();
 					while (data.next()) {
-						for (int i = 2; i < rc; i++) {	
+						for (int i = 2; i < rc; i++) {
+						    try {
 							float f = data.getFloat(i);
 							if (!data.wasNull()){
 								addItem(ica[i-2], data.getTimestamp(1), f);
 							}
+						    } catch ( java.sql.SQLException e) {
+							if (e.toString().startsWith("Invalid value for getFloat() - 'NUL'")) 
+							    System.err.println(e.toString());
+							else
+							    e.printStackTrace();
+						    }
 						}
 					}
 				}
@@ -738,7 +746,7 @@ public class Vizualisation  implements java.io.Serializable {
 		return variab;
 	}
 
-	public Timeline plotVariable(String variable, String stationstr, String unit){ 
+    /*	public Timeline plotVariable(String variable, String stationstr, String unit){ 
 		
 	    Timeline variabletimeline = createTimeline(WIDTH, HEIGHT);
 	    variabletimeline.setCaption(stationstr + "  " + variable);
@@ -748,7 +756,7 @@ public class Vizualisation  implements java.io.Serializable {
 	    Integer intval = null;
 	    Method m = null;
 	    //String wantedmethod = "";
-	        if (stationstr == "Hyytiälä"){
+	    if (stationstr.equals(Station.Hyytiälä)){
 	        	List<Hydemeta> data = getDataInRange(Hydemeta.class, start, end, variable);
 	        	//Method[] methods = Hydemeta.getClass().getMethods();
 	        	String met = Character.toUpperCase(variable.charAt(0)) + variable.substring(1);
@@ -815,7 +823,7 @@ public class Vizualisation  implements java.io.Serializable {
 					}
 	        	}
 	        }
-	        if (stationstr == "Kumpula"){
+	    if (stationstr.equals("Kumpula")){
 	        	List<Kumpulameta> data = getDataInRange(Kumpulameta.class, start, end, variable);
 	        	//Method[] methods = Kumpulameta.getClass().getMethods();
 	        	String met = Character.toUpperCase(variable.charAt(0)) + variable.substring(1);
@@ -883,7 +891,7 @@ public class Vizualisation  implements java.io.Serializable {
 					}
 	        	}
 	        }
-	        if (stationstr == "Värriö"){
+	    if (stationstr.equals("Värriö")){
 	        	List<Varriometa> data = getDataInRange(Varriometa.class, start, end, variable);
 	        	//Method[] methods = Varriometa.getClass().getMethods();
 	        	String met = Character.toUpperCase(variable.charAt(0)) + variable.substring(1);
@@ -956,7 +964,8 @@ public class Vizualisation  implements java.io.Serializable {
 	        variabletimeline.setVerticalAxisLegendUnit(container_variable, unit);
 	        variabletimeline.setGraphOutlineColor(container_variable, Color.RED);	
 	        return variabletimeline;	
-	} 
+		} */ //findbug
+ 
 	/**
 	 * HorizontalLayout with Margin and Spacing
 	 * @return new HorizontalLayout 

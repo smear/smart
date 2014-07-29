@@ -14,20 +14,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
-//import java.util.Iterator;
+
 import java.util.List;
 import java.util.HashSet;
-//import java.lang.Object;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.Attributes;
-//import java.util.Map;
-//import java.util.Set;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.vaadin.server.FileDownloader;
@@ -91,7 +80,7 @@ public class Download {
 		//this.station = station;
 		this.start = start;
 		this.end = end;
-		this.stations = stations;
+		//this.stations = stations; //findbug
 		this.tree = (Tree)vs.getComponent(0); //Variable selection tree
 		this.separator = StringPool.COMMA;
 		this.avg = avg;
@@ -119,7 +108,7 @@ public class Download {
 			//System.out.println("Asemalta "+stationstr);
 			//tableset.add(tablestr);
 		    
-			if (quality == "CHECKED"){
+			if (quality.equals(SmearViewUI.CHECKED)){
 				emep.add(var+"_EMEP");
 				emep.add(var);
 				this.qset = db.avg(emep, tablestr, start.getTime(), end.getTime(), readAVG(this.avg), readAVGtype(typeOfAVG));					
@@ -319,41 +308,7 @@ public class Download {
 		}
 		return v;
 	}
-	/*public static Columns parseColumns(String xmlString) {
-		final Columns columns = new Columns(separator);
-		SAXParserFactory saxpf = SAXParserFactory.newInstance();
-		try {
-			SAXParser sp = saxpf.newSAXParser();
 
-			DefaultHandler handler = new DefaultHandler() {
-				boolean bname = false;
-				public void startElement(String uri, String localName,String qName, 
-						Attributes attributes) throws SAXException {
-					if (qName.equalsIgnoreCase("column-name")) {
-						bname = true;
-					}
-				}
-				public void characters(char ch[], int start, int length) throws SAXException {
-
-					if (bname) {
-						columns.append( new String(ch, start, length));
-						bname = false;
-					}
-				}
-			};
-			InputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8"));
-			sp.parse(stream, handler);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return columns;
-	}*/
 
 	private int readAVG(ComboBox avg2) {
 		try {

@@ -118,7 +118,7 @@ public class SmearViewUI extends UI {
 	private final DB db = new DB();
 	private static final String LABELSTART = "<a href=\"/tmp/";
 	private static final String LABELEND = "\">HDF5<a>";
-	public static HierarchicalContainer treecontainer = new HierarchicalContainer();
+	public final HierarchicalContainer treecontainer = new HierarchicalContainer();
 	//private static final String TABLES[] = {"", "VAR_META", "HYY_META", "", "KUM_META"};	
 	public static final String DESCRIPTION = "description";
 	public static final String TITLE = "title";
@@ -126,6 +126,7 @@ public class SmearViewUI extends UI {
 	public static final String SOURCE = "source";
 	public static final String AVAILABLE = "available";
 	public static final String CONTACT_EMAIL = "";
+    public static final String CHECKED = "CHECKED";
 	public static final String WIDTH = "130px";
 	public static final String SMALLBUTTONWIDTH = "30px";
 	public static List<SmearVariableMetadata> vmdata;
@@ -310,12 +311,12 @@ public class SmearViewUI extends UI {
 						treecontainer.setParent(variable_id,categoryitem);
 						treecontainer.setChildrenAllowed(variable_id, false);
 						try{
-							if (description != null || description != ""){
+						    if (description != null || !description.equals("")){
 								variable_item.getItemProperty(DESCRIPTION).setValue(description);
 							} else {
 								variable_item.getItemProperty(DESCRIPTION).setValue("No meta");
 							}
-							if (title != null || title != "") { 
+							if (title != null || !title.equals("")) { 
 								variable_item.getItemProperty(TITLE).setValue(title);
 							} else {
 								variable_item.getItemProperty(TITLE).setValue("No title");
@@ -572,9 +573,9 @@ public class SmearViewUI extends UI {
 		//Qualitylevel
 		
 		quality.addItem("ANY");
-		quality.addItem("CHECKED");
+		quality.addItem(CHECKED);
 		quality.setItemCaption("ANY", "Any");
-		quality.setItemCaption("CHECKED", "Quality Checked");
+		quality.setItemCaption(CHECKED, "Quality Checked");
 		quality.setNullSelectionAllowed(false);
 		quality.setValue("ANY");
 		quality.setImmediate(true);
