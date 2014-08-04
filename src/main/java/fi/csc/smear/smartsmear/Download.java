@@ -62,7 +62,7 @@ public class Download {
 	public String[] metadata_unit;
 	public String[] metadata_var;
 	ComboBox avg, typeOfAVG;
-	private static String separator;
+	private static final String separator = StringPool.COMMA;
 	private Station stations;
 	private int station;
 	private Date start;
@@ -82,7 +82,6 @@ public class Download {
 		this.end = end;
 		//this.stations = stations; //findbug
 		this.tree = (Tree)vs.getComponent(0); //Variable selection tree
-		this.separator = StringPool.COMMA;
 		this.avg = avg;
 		this.typeOfAVG = typeOfAVG;
 		this.container = container;

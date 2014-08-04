@@ -130,11 +130,11 @@ public class SmearViewUI extends UI {
 	public static final String WIDTH = "130px";
 	public static final String SMALLBUTTONWIDTH = "30px";
 	public static List<SmearVariableMetadata> vmdata;
-	public static String contact_email = "Someone";
+	public String contact_email = "Someone";
 	private Hashtable<String, Integer> tablestation = new Hashtable<String, Integer>();
 	private static final Date START = new Date(91,5,1);
 	public boolean nohuman = false;
-	public static FileDownloader fd = null;
+	public FileDownloader fd = null;
 	public static int maxTimeWindow = 183;
 	private static final String MAX_SCOPE = "maxScope";
 	private HorizontalLayout[] oldrows = new HorizontalLayout[Vizualisation.ROWS]; //midselect visualization

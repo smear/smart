@@ -108,7 +108,7 @@ public class HDF5 implements Runnable{
 		try {
 			FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
 			if (null == fileFormat) {
-				System.err.println("Failed to getFileFormat: "+filename);				
+			    System.err.println("Failed to getFileFormat: "+filename);				//homma kaatuu null-pointeriin seuraavalla rivillä 
 			}
 			h5f = (H5File)fileFormat.createFile(filename, FileFormat.FILE_CREATE_DELETE );
 			if (h5f  == null) {
@@ -143,16 +143,21 @@ public class HDF5 implements Runnable{
 		    Datatype nativefloat = h5f.createDatatype(Datatype.CLASS_FLOAT, 4, Datatype.NATIVE, Datatype.NATIVE);
 		    ResultSetMetaData rsmd = data.getMetaData();
 		    int cc = rsmd.getColumnCount();
-		    data.last();
-		    int rows = data.getRow();
-		    long [] dims = { rows } ;
 		    long t1=0, t2 = 0;
 		    Dataset dataset;
-		    String samptimes[] = new String[rows+1];
-		    String nws[] = new String[rows+1];
-		    float fa[][] = new float[cc][rows+1]; 
+		    String samptimes[];
+		    float fa[][];
+		    String nws[];
+		    long  dims[] = new long[1];
+		    int rows;
 		    int n = 0;
 		    synchronized(dl.data) {
+			data.last();
+			rows = data.getRow();
+			dims[0] =  rows ;
+			samptimes = new String[rows+1];
+			nws = new String[rows+1];
+			fa = new float[cc][rows+1]; 
 		    	data.beforeFirst();
 		    	try {
 		    		int j=0; //row
