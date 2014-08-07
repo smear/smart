@@ -57,8 +57,8 @@ public class Station  {
 	private static final Date START = new Date(91,5,1);
 	VerticalLayout stationselection;
 	//private HorizontalLayout dayselection;
-	private VerticalLayout variableselection;
-	private static List<SmearVariableMetadata> vmdata;
+        //private VerticalLayout variableselection; //findbug
+        //private static List<SmearVariableMetadata> vmdata; //findbug
 	private static Hashtable<String, Integer> tablestation = new Hashtable<String, Integer>();
 	private static String[] identifier = new String[STATIONS]; //bigest station no + 1  
 	private static String[] geographicalCoverage = new String[STATIONS]; // 5 -"-
@@ -66,15 +66,7 @@ public class Station  {
 	public static Date startfrom = new Date(91,5,1);
 	
 	public Station( VerticalLayout vs ) {
-		this.variableselection = vs;
-		for (int i = 0; i < ASEMAT.length; i++){
-			for (int j = 0; j < Station.TAULUT[i].length; j++){
-				tablestation.put(TAULUT[i][j], i);
-			}
-		}
-		/*tablestation.put(TABLES2[VÄRRIÖ], VÄRRIÖ);
-		tablestation.put(TABLES2[HYYTIÄLÄ], HYYTIÄLÄ);
-		tablestation.put(TABLES2[KUMPULA], KUMPULA);*/
+	    //this.variableselection = vs;
 		stationselection = new VerticalLayout();
 			//stationselection.setMargin(true);
 			/*final CheckBox hyde = new CheckBox(Hyytiälä);
@@ -193,4 +185,13 @@ public class Station  {
 		return geographicalCoverage[station];
 	}
 	
+    static {
+		for (int i = 0; i < ASEMAT.length; i++){
+			for (int j = 0; j < Station.TAULUT[i].length; j++){
+				tablestation.put(TAULUT[i][j], i);
+			}
+		}
+
+	}
+
 }

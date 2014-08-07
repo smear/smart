@@ -24,13 +24,10 @@ import fi.csc.smear.db.service.persistence.VarriometaUtil;
  */
 public class Smearyhteys {
 	static final String AJURI= "com.mysql.jdbc.Driver";
-	String DATASOURCE_CONTEXT = "smear";
-	//static final String PORTALEXTPROPERTIES = "/opt/avaa/liferay-portal/tomacat/webapps/ROOT/WEB-INF/classes/portal-ext.properties";
 	static final String PROPERTIES = "db.properties";
 	static int port=3320;
 	static final String URL = "jdbc:mysql://db5.csc.fi:"+port+"/smear";
-	private String user = "AVAA-read"; // database has no secrets
-	private String passwd = "qry881iU"; // I tried JNDI and property reading before this
+
 	
 	public Smearyhteys() {
 		/*Properties prop = new Properties();

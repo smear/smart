@@ -57,20 +57,20 @@ public class HDF5 implements Runnable{
 	DateFormat fnf = new SimpleDateFormat(Download.FILENAMEFORMAT);
 	//Columns columns = null;	
 	Hashtable<String, String> httitle = new  Hashtable<String, String>();
-	private Station stations;
+    //private Station stations;
 	private Hashtable<String, String> htunit = new  Hashtable<String, String>();
 	private int avg;
 	private ComboBox typeOfAVG;
 	//private Tree tree;
 	
-	public HDF5(Download dl, Date start, Date end, int station, Station stations, int avg, ComboBox typeOfAVG) {
+	public HDF5(Download dl, Date start, Date end, int station, int avg, ComboBox typeOfAVG) {
 		this.dl = dl;	
 		this.data = dl.data;
 		this.start = start;
 		this.end = end;
 		this.stationno = station;
 		this.mdata = SmearViewUI.getMetadataInStation(station);
-		this.stations = stations;
+		//this.stations = stations;
 		this.avg = avg;
 		this.typeOfAVG = typeOfAVG;
 		//this.tree = tree;
@@ -124,7 +124,7 @@ public class HDF5 implements Runnable{
 			station.writeMetadata(attribute("metadata identifier", CLSTRING, "URN:NBN:fi-fe201207066171"));
 			Date date = new Date();
 			station.writeMetadata(attribute("metadata date of modification", CLSTRING, formatter.format(date)));		
-			station.writeMetadata(attribute("identifier", CLSTRING, stations.getIdentifier(stationno)));
+			station.writeMetadata(attribute("identifier", CLSTRING, Station.getIdentifier(stationno)));
 			station.writeMetadata(attribute("date of modification", CLSTRING,  formatter.format(end)));
 			station.writeMetadata(attribute("typeOfAVG", CLSTRING, (String)typeOfAVG.getValue()));
 			station.writeMetadata(attribute("isPartOf", CLSTRING, "http://www.atm.helsinki.fi/SMEAR/"));
@@ -134,7 +134,7 @@ public class HDF5 implements Runnable{
 			h5f.writeAttribute(root, attribute("Cite", CLSTRING, SmearViewUI.CITE), false);
 			station.writeMetadata(attribute("title", CLSTRING, stationname + " SMEAR "+
 					formatter.format(start)+"-"+formatter.format(end)));
-			station.writeMetadata(attribute("geographicalCoverage", CLSTRING, stations.getGeographicalCoverage(stationno)));
+			station.writeMetadata(attribute("geographicalCoverage", CLSTRING, Station.getGeographicalCoverage(stationno)));
 			h5f.writeAttribute(root, attribute("access rights", CLSTRING,
 					"<RightsDeclaration RIGHTSCATEGORY=”LICENSED”>http://creativecommons.org/licenses/by-sa/3.0/</RightsDeclaration>"), false);
 			h5f.writeAttribute(root, attribute("project", CLSTRING, "http://www.atm.helsinki.fi/SMEAR/"), false);
@@ -225,8 +225,9 @@ public class HDF5 implements Runnable{
 		}
 	}
 
+   
 	private float[][] keskiarvotus(float[][] fa, int count, int size, long interval ) {
-		Boolean geom = false;
+	    //Boolean geom = false; // findbug: täyttyy testata
 		Boolean median = false;
 		int average = 0;
 		if ((avg > 0) && (interval > 0)) {
