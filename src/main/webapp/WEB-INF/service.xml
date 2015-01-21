@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "[http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd]">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "[http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd]">
 
 <service-builder package-path="fi.csc.smear.db">
 	<author>pj</author>
@@ -567,7 +567,6 @@
 		<column name="UVB" type="float"></column>
 		<column name="UVAT" type="float"></column>
 		<column name="UVBT" type="float"></column>
-		<column name="BAR" type="float"></column>
 		<column name="RAIN" type="float"></column>
 		<column name="TDRY0" type="float"></column>
 		<column name="TWET0" type="float"></column>
@@ -606,19 +605,11 @@
 		<column name="temp" type="float"></column>
 		<column name="WS00" type="float"></column>
 		<column name="visibility" type="float"></column>
-		<column name="rainint" type="float"></column>
-		<column name="rainintmax" type="float"></column>
-		<column name="rainintmin" type="float"></column>
+		<column name="rainint" type="float"></column>		
 		<column name="Precipacc" type="float"></column>
-		<column name="wthcodemin" type="int"></column>
-		<column name="wthcodemax" type="int"></column>
 		<column name="haildiammax" type="float"></column>
 		<column name="snowint" type="float"></column>
-		<column name="snowintmin" type="float"></column>
-		<column name="snowintmax" type="float"></column>
 		<column name="visibilitylpm" type="float"></column>
-		<column name="visibilitylpmmin" type="float"></column>
-		<column name="visibilitylpmmax" type="float"></column>
 		<column name="wthcode" type="int"></column>
 		<column name="CO_1" type="float"></column>
 		<column name="quality" type="int"></column>
@@ -629,8 +620,9 @@
 		<column name="Tsoil_EMEP" type="int"></column>
 		<column name="wsoil_EMEP" type="int"></column>
 		<column name="CO206_EMEP" type="int"></column>
-		<column name="CO2soil_EMEP" type="int"></column>
+		<column name="CO2soil_EMEP" type="int"></column>		
 	</entity>
+	
 	<entity name="Varrio_tree" table="VAR_TREE" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
                 <column name="SAMPTIME" type="Date" primary="true"></column>
 		<column name="F_CO2_tree0" type="float"></column>
@@ -1048,5 +1040,449 @@
 	<column name="d100e4" type="float" />
 	<column name="tconc" type="float" />
 	</entity>
+
+<entity name="Sii1meta" table="SII1_META" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime" type="Date" primary="true" />  
+<column name="T_a" type="float" />            
+<column name="T_a_EMEP" type="int" />       
+<column name="RH"  type="float" />           
+<column name="RH_EMEP" type="int" />        
+<column name="PAR"  type="float" />            
+<column name="PAR_EMEP" type="int" />       
+<column name="R_PAR"  type="float" />          
+<column name="R_PAR_EMEP" type="int" />     
+<column name="Net_CNR4"   type="float" />      
+<column name="Net_CNR4_EMEP" type="int" />  
+<column name="Net_NRLite"  type="float" />     
+<column name="Net_NRLite_EMEP" type="int" />
+<column name="Wsoil_1"  type="float" />     
+<column name="Wsoil_1_EMEP" type="int" />   
+<column name="Wsoil_2"   type="float" />       
+<column name="Wsoil_2_EMEP" type="int" />   
+<column name="T_p_B5"  type="float" />        
+<column name="T_p_B5_EMEP" type="int" />    
+<column name="T_p_B20" type="float" />        
+<column name="T_p_B20_EMEP" type="int" />   
+<column name="T_p_B35"  type="float" />        
+<column name="T_p_B35_EMEP" type="int" />   
+<column name="T_p_B50"  type="float" />      
+<column name="T_p_B50_EMEP" type="int" />   
+<column name="T_p_C1"  type="float" />         
+<column name="T_p_C1_EMEP" type="int" />    
+<column name="T_p_C2"  type="float" />         
+<column name="T_p_C2_EMEP" type="int" />    
+<column name="T_p_C5"  type="float" />         
+<column name="T_p_C5_EMEP" type="int" />    
+<column name="T_p_C10"  type="float" /> 
+<column name="T_p_C10_EMEP" type="int" />   
+<column name="T_p_C15"  type="float" />      
+<column name="T_p_C15_EMEP" type="int" />   
+<column name="T_p_C20"  type="float" />       
+<column name="T_p_C20_EMEP" type="int" />   
+<column name="T_p_C30"  type="float" />      
+<column name="T_p_C30_EMEP" type="int" />   
+<column name="T_p_C50"  type="float" />       
+<column name="T_p_C50_EMEP" type="int" />   
+<column name="T_p_C70"  type="float" />        
+<column name="T_p_C70_EMEP" type="int" />   
+<column name="T_p_C100"  type="float" />       
+<column name="T_p_C100_EMEP" type="int" />  
+<column name="WTD"  type="float" />           
+<column name="WTD_EMEP" type="int" />       
+<column name="Precip"  type="float" />        
+<column name="Precip_EMEP" type="int" />   
+</entity>
+
+<entity name="Sii2meta" table="SII2_META" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />  
+<column name="T_a"   type="float" />
+<column name="T_a_EMEP" type="int" />
+<column name="RH"   type="float" />
+<column name="RH_EMEP" type="int" />
+<column name="Net"   type="float" />
+<column name="Net_EMEP" type="int" />
+<column name="T_p_5"   type="float" />
+<column name="T_p_5_EMEP" type="int" />
+<column name="T_p_B20"   type="float" />
+<column name="T_p_B20_EMEP" type="int" />
+<column name="T_p_B35"   type="float" />
+<column name="T_p_B35_EMEP" type="int" />
+<column name="T_p_B50"   type="float" />
+<column name="T_p_B50_EMEP" type="int" />
+<column name="WTD"   type="float" />
+<column name="WTD_EMEP" type="int" />
+<column name="Precip"   type="float" />
+<column name="Precip_EMEP" type="int" />
+</entity>
+
+<entity name="Sii1eddy" table="SII1_EDDY" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />  
+<column name="U"   type="float" />
+<column name="U_EMEP" type="int" />
+<column name="wind_dir"   type="float" />
+<column name="wind_dir_EMEP" type="int" />
+<column name="eta"   type="float" />
+<column name="eta_EMEP" type="int" />
+<column name="theta"   type="float" />
+<column name="theta_EMEP" type="int" />
+<column name="beta"   type="float" />
+<column name="beta_EMEP" type="int" />
+<column name="H"   type="float" />
+<column name="H_EMEP" type="int" />
+<column name="tau"   type="float" />
+<column name="tau_EMEP" type="int" />
+<column name="u_star"   type="float" />
+<column name="u_star_EMEP" type="int" />
+<column name="MO_length"   type="float" />
+<column name="MO_length_EMEP" type="int" />
+<column name="err_packet"   type="float" />
+<column name="err_packet_EMEP" type="int" />
+<column name="F_c_LI70"   type="float" />
+<column name="F_c_LI70_EMEP" type="int" />
+<column name="F_H2O_LI70"   type="float" />
+<column name="F_H2O_LI70_EMEP" type="int" />
+<column name="F_CH4_LGR"   type="float" />
+<column name="F_CH4_LGR_EMEP" type="int" />
+<column name="F_CH4_TGA"   type="float" />
+<column name="F_CH4_TGA_EMEP" type="int" />
+<column name="F_H2O_PIC"   type="float" />
+<column name="F_H2O_PIC_EMEP" type="int" />
+<column name="F_CH4_PIC"   type="float" />
+<column name="F_CH4_PIC_EMEP" type="int" />
+<column name="LE_LI70"   type="float" />
+<column name="LE_LI70_EMEP" type="int" />
+<column name="LE_PIC"   type="float" />
+<column name="LE_PIC_EMEP" type="int" />
+<column name="av_u"   type="float" />
+<column name="av_u_EMEP" type="int" />
+<column name="av_v"   type="float" />
+<column name="av_v_EMEP" type="int" />
+<column name="av_w"   type="float" />
+<column name="av_w_EMEP" type="int" />
+<column name="T_s"   type="float" />
+<column name="T_s_EMEP" type="int" />
+<column name="av_c"   type="float" />
+<column name="av_c_EMEP" type="int" />
+<column name="av_H2O_LI70"   type="float" />
+<column name="av_H2O_LI70_EMEP" type="int" />
+<column name="av_CH4_LGR"   type="float" />
+<column name="av_CH4_LGR_EMEP" type="int" />
+<column name="av_CH4_TGA"   type="float" />
+<column name="av_CH4_TGA_EMEP" type="int" />
+<column name="av_H2O_PIC"   type="float" />
+<column name="av_H2O_PIC_EMEP" type="int" />
+<column name="av_CH4_PIC"   type="float" />
+<column name="av_CH4_PIC_EMEP" type="int" />
+<column name="std_u"   type="float" />
+<column name="std_u_EMEP" type="int" />
+<column name="std_v"   type="float" />
+<column name="std_v_EMEP" type="int" />
+<column name="std_w"   type="float" />
+<column name="std_w_EMEP" type="int" />
+<column name="std_T_s"   type="float" />
+<column name="std_T_s_EMEP" type="int" />
+<column name="std_c_LI70"   type="float" />
+<column name="std_c_LI70_EMEP" type="int" />
+<column name="std_H2O_LI70"   type="float" />
+<column name="std_H2O_LI70_EMEP" type="int" />
+<column name="std_CH4_LGR"   type="float" />
+<column name="std_CH4_LGR_EMEP" type="int" />
+<column name="std_CH4_TGA"   type="float" />
+<column name="std_CH4_TGA_EMEP" type="int" />
+<column name="std_H2O_PIC"   type="float" />
+<column name="std_H2O_PIC_EMEP" type="int" />
+<column name="std_CH4_PIC"   type="float" />
+<column name="std_CH4_PIC_EMEP" type="int" />
+<column name="c_lag_LI70"   type="float" />
+<column name="c_lag_LI70_EMEP" type="int" />
+<column name="H2O_lag_LI70"   type="float" />
+<column name="H2O_lag_LI70_EMEP" type="int" />
+<column name="CH4_lag_LGR"   type="float" />
+<column name="CH4_lag_LGR_EMEP" type="int" />
+<column name="CH4_lag_TGA"   type="float" />
+<column name="CH4_lag_TGA_EMEP" type="int" />
+<column name="H2O_lag_PIC"   type="float" />
+<column name="H2O_lag_PIC_EMEP" type="int" />
+<column name="CH4_lag_PIC"   type="float" />
+<column name="CH4_lag_PIC_EMEP" type="int" />
+<column name="Qc_H" type="int" />
+<column name="Qc_H_EMEP" type="int" />
+<column name="Qc_CO2_LI70" type="int" />
+<column name="Qc_CO2_LI70_EMEP" type="int" />
+<column name="Qc_CH4_LGR" type="int" />
+<column name="Qc_CH4_LGR_EMEP" type="int" />
+<column name="Qc_CH4_TGA" type="int" />
+<column name="Qc_CH4_TGA_EMEP" type="int" />
+<column name="Qc_CH4_PIC" type="int" />
+<column name="Qc_CH4_PIC_EMEP" type="int" />
+<column name="Qc_LE_LI70" type="int" /> 
+<column name="Qc_LE_LI70_EMEP" type="int" />
+<column name="Qc_LE_PIC" type="int" />  
+<column name="Qc_LE_PIC_EMEP" type="int" />
+<column name="Qc_tau" type="int" />
+<column name="Qc_tau_EMEP" type="int" />
+</entity>
+
+<entity name="Sii2eddy" table="SII2_EDDY" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />  
+<column name="U"   type="float" />
+<column name="U_EMEP" type="int" />
+<column name="wind_dir"   type="float" />
+<column name="wind_dir_EMEP" type="int" />
+<column name="eta"   type="float" />
+<column name="eta_EMEP" type="int" />
+<column name="theta"   type="float" />
+<column name="theta_EMEP" type="int" />
+<column name="beta"   type="float" />
+<column name="beta_EMEP" type="int" />
+<column name="H"   type="float" />
+<column name="H_EMEP" type="int" />
+<column name="tau"   type="float" />
+<column name="tau_EMEP" type="int" />
+<column name="u_star"   type="float" />
+<column name="u_star_EMEP" type="int" />
+<column name="MO_length"   type="float" />
+<column name="MO_length_EMEP" type="int" />
+<column name="err_packet"   type="float" />
+<column name="err_packet_EMEP" type="int" />
+<column name="F_c_LI72"   type="float" />
+<column name="F_c_LI72_EMEP" type="int" />
+<column name="F_H2O_LI72"   type="float" />
+<column name="F_H2O_LI72_EMEP" type="int" />
+<column name="F_CH4_LI77"   type="float" />
+<column name="F_CH4_LI77_EMEP" type="int" />
+<column name="LE_LI72"   type="float" />
+<column name="LE_LI72_EMEP" type="int" />
+<column name="av_u"   type="float" />
+<column name="av_u_EMEP" type="int" />
+<column name="av_v"   type="float" />
+<column name="av_v_EMEP" type="int" />
+<column name="av_w"   type="float" />
+<column name="av_w_EMEP" type="int" />
+<column name="T_s"   type="float" />
+<column name="T_s_EMEP" type="int" />
+<column name="av_c"   type="float" />
+<column name="av_c_EMEP" type="int" />
+<column name="av_H2O_LI72"   type="float" />
+<column name="av_H2O_LI72_EMEP" type="int" />
+<column name="av_CH4_LI77"   type="float" />
+<column name="av_CH4_LI77_EMEP" type="int" />
+<column name="std_u"   type="float" />
+<column name="std_u_EMEP" type="int" />
+<column name="std_v"   type="float" />
+<column name="std_v_EMEP" type="int" />
+<column name="std_w"   type="float" />
+<column name="std_w_EMEP" type="int" />
+<column name="std_T_s"   type="float" />
+<column name="std_T_s_EMEP" type="int" />
+<column name="std_c_LI72"   type="float" />
+<column name="std_c_LI72_EMEP" type="int" />
+<column name="std_H2O_LI72"   type="float" />
+<column name="std_H2O_LI72_EMEP" type="int" />
+<column name="std_CH4_LI77"   type="float" />
+<column name="std_CH4_LI77_EMEP" type="int" />
+<column name="c_lag_LI72"   type="float" />
+<column name="c_lag_LI72_EMEP" type="int" />
+<column name="H2O_lag_LI72"   type="float" />
+<column name="H2O_lag_LI72_EMEP" type="int" />
+<column name="CH4_lag_LI77"   type="float" />
+<column name="CH4_lag_LI77_EMEP" type="int" />
+<column name="Qc_H" type="int" />
+<column name="Qc_H_EMEP" type="int" />
+<column name="Qc_CO2_LI70" type="int" />
+<column name="Qc_CO2_LI70_EMEP" type="int" />
+<column name="Qc_CH4_LI77" type="int" />
+<column name="Qc_CH4_LI77_EMEP" type="int" />
+<column name="Qc_LE_LI72" type="int" />
+<column name="Qc_LE_LI72_EMEP" type="int" />
+<column name="Qc_tau" type="int" />
+<column name="Qc_tau_EMEP" type="int" />
+</entity>
+
+<entity name="Hyy_eddysub" table="HYY_EDDYSUB" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />
+<column name="H_subm"   type="float" />
+<column name="H_subm_EMEP" type="int" />
+<column name="Qc_H_subm" type="int" />             
+<column name="Qc_H_subm_EMEP" type="int" />
+<column name="LE_subm"   type="float" />
+<column name="LE_subm_EMEP" type="int" />
+<column name="Qc_LE_subm" type="int" />
+<column name="Qc_LE_subm_EMEP" type="int" />
+<column name="E_subm"   type="float" />
+<column name="E_subm_EMEP" type="int" />
+<column name="Qc_E_subm" type="int" />
+<column name="Qc_E_subm_EMEP" type="int" />
+<column name="F_c_subm"   type="float" />
+<column name="F_c_subm_EMEP" type="int" />
+<column name="Qc_F_c_subm" type="int" />
+<column name="Qc_F_c_subm_EMEP" type="int" />
+<column name="tau_subm"   type="float" />
+<column name="tau_subm_EMEP" type="int" />
+<column name="Qc_tau_subm" type="int" />
+<column name="Qc_tau_subm_EMEP" type="int" />
+<column name="u_star_subm" type="float" />
+<column name="u_star_subm_EMEP" type="int" />
+<column name="MO_length_subm" type="float" />
+<column name="MO_length_subm_EMEP" type="int" />
+<column name="std_u_subm"   type="float" />
+<column name="std_u_subm_EMEP" type="int" />
+<column name="std_v_subm"   type="float" />
+<column name="std_v_subm_EMEP" type="int" />
+<column name="std_w_subm"   type="float" />
+<column name="std_w_subm_EMEP" type="int" />
+<column name="std_t_subm"   type="float" />
+<column name="std_t_subm_EMEP" type="int" />
+<column name="std_c_subm"   type="float" />
+<column name="std_c_subm_EMEP" type="int" />
+<column name="std_h_subm"   type="float" />
+<column name="std_h_subm_EMEP" type="int" />
+<column name="av_u_subm"   type="float" />
+<column name="av_u_subm_EMEP" type="int" />
+<column name="av_v_subm"   type="float" />
+<column name="av_v_subm_EMEP" type="int" />
+<column name="av_w_subm"   type="float" />
+<column name="av_w_subm_EMEP" type="int" />
+<column name="av_t_subm"   type="float" />
+<column name="av_t_subm_EMEP" type="int" />
+<column name="av_c_subm"   type="float" />
+<column name="av_c_subm_EMEP" type="int" />
+<column name="av_h_subm"   type="float" />
+<column name="av_h_subm_EMEP" type="int" />
+<column name="U_subm"   type="float" />
+<column name="U_subm_EMEP" type="int" />
+<column name="wind_dir_subm" type="float" />
+<column name="wind_dir_subm_EMEP" type="int" />
+<column name="eta_subm"   type="float" />
+<column name="eta_subm_EMEP" type="int" />
+<column name="theta_subm"   type="float" />
+<column name="theta_subm_EMEP" type="int" />
+<column name="beta_subm"   type="float" />
+<column name="beta_subm_EMEP" type="int" />
+<column name="c_lag_subm"   type="float" />
+<column name="c_lag_subm_EMEP" type="int" />
+<column name="h_lag_subm"   type="float" />
+<column name="h_lag_subm_EMEP" type="int" />
+<column name="err_packet_subm" type="float" />
+<column name="err_packet_subm_EMEP" type="int" />
+<column name="licor_t_std_subm" type="float" />
+<column name="licor_t_std_subm_EMEP" type="int" />
+<column name="licor_t_av_subm" type="float" />
+<column name="licor_t_av_subm_EMEP" type="int" />
+<column name="licor_p_std_subm" type="float" />
+<column name="licor_p_std_subm_EMEP" type="int" />
+<column name="licor_p_av_subm" type="float" />
+<column name="licor_p_av_subm_EMEP" type="int" />
+<column name="av_O3_subm"   type="float" />
+<column name="av_O3_subm_EMEP" type="int" />
+<column name="std_O3_subm" type="float" />
+<column name="std_O3_subm_EMEP" type="int" />
+<column name="O3_lag_subm" type="float" />
+<column name="O3_lag_subm_EMEP" type="int" />
+<column name="F_O3_subm"   type="float" />
+<column name="F_O3_subm_EMEP" type="int" />
+<column name="Qc_F_O3_subm" type="int" />
+<column name="Qc_F_O3_subm_EMEP" type="int" />
+</entity>
+
+<entity name="Vareddy" table="VAR_EDDY" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />  
+<column name="H"   type="float" />
+<column name="H_EMEP" type="int" />
+<column name="LE"   type="float" />
+<column name="LE_EMEP" type="int" />
+<column name="E"   type="float" />
+<column name="E_EMEP" type="int" />
+<column name="F_c"   type="float" />
+<column name="F_c_EMEP" type="int" />
+<column name="tau"   type="float" />
+<column name="tau_EMEP" type="int" />
+<column name="u_star"   type="float" />
+<column name="u_star_EMEP" type="int" />
+<column name="MO_length" type="float" />
+<column name="MO_length_EMEP" type="int" />
+<column name="std_u"   type="float" />
+<column name="std_u_EMEP" type="int" />
+<column name="std_v"   type="float" />
+<column name="std_v_EMEP" type="int" />
+<column name="std_w"   type="float" />
+<column name="std_w_EMEP" type="int" />
+<column name="std_t"   type="float" />
+<column name="std_t_EMEP" type="int" />
+<column name="std_c"   type="float" />
+<column name="std_c_EMEP" type="int" />
+<column name="std_h"   type="float" />
+<column name="std_h_EMEP" type="int" />
+<column name="av_u"   type="float" />
+<column name="av_u_EMEP" type="int" />
+<column name="av_v"   type="float" />
+<column name="av_v_EMEP" type="int" />
+<column name="av_w"   type="float" />
+<column name="av_w_EMEP" type="int" />
+<column name="av_t"   type="float" />
+<column name="av_t_EMEP" type="int" />
+<column name="av_c"   type="float" />
+<column name="av_c_EMEP" type="int" />
+<column name="av_h"   type="float" />
+<column name="av_h_EMEP" type="int" />
+<column name="U"   type="float" />
+<column name="U_EMEP" type="int" />
+<column name="wind_dir" type="float" />
+<column name="wind_dir_EMEP" type="int" />
+<column name="c_lag"   type="float" />
+<column name="c_lag_EMEP" type="int" />
+<column name="h_lag"   type="float" />
+<column name="h_lag_EMEP" type="int" />
+<column name="licor_t_std" type="float" />
+<column name="licor_t_std_EMEP" type="int" />
+<column name="licor_t_av" type="float" />
+<column name="licor_t_av_EMEP" type="int" />
+<column name="licor_p_std" type="float" />
+<column name="licor_p_std_EMEP" type="int" />
+<column name="licor_p_av" type="float" />
+<column name="licor_p_av_EMEP" type="int" />
+<column name="H_sub"   type="float" />
+<column name="H_sub_EMEP" type="int" />
+<column name="LE_sub"   type="float" />
+<column name="LE_sub_EMEP" type="int" />
+<column name="E_sub"   type="float" />
+<column name="E_sub_EMEP" type="int" />
+<column name="F_c_sub"   type="float" />
+<column name="F_c_sub_EMEP" type="int" />
+<column name="tau_sub"   type="float" />
+<column name="tau_sub_EMEP" type="int" />
+<column name="u_star_sub" type="float" />
+<column name="u_star_sub_EMEP" type="int" />
+<column name="MO_length_sub" type="float" />
+<column name="MO_length_sub_EMEP" type="int" />
+<column name="std_u_sub" type="float" />
+<column name="std_u_sub_EMEP" type="int" />
+<column name="std_v_sub" type="float" />
+<column name="std_v_sub_EMEP" type="int" />
+<column name="std_w_sub" type="float" />
+<column name="std_w_sub_EMEP" type="int" />
+<column name="std_t_sub" type="float" />
+<column name="std_t_sub_EMEP" type="int" />
+<column name="std_c_sub" type="float" />
+<column name="std_c_sub_EMEP" type="int" />
+<column name="std_h_sub" type="float" />
+<column name="std_h_sub_EMEP" type="int" />
+<column name="av_u_sub" type="float" />
+<column name="av_u_sub_EMEP" type="int" />
+<column name="av_v_sub" type="float" />
+<column name="av_v_sub_EMEP" type="int" />
+<column name="av_w_sub" type="float" />
+<column name="av_w_sub_EMEP" type="int" />
+<column name="av_t_sub" type="float" />
+<column name="av_t_sub_EMEP" type="int" />
+<column name="av_c_sub" type="float" />
+<column name="av_c_sub_EMEP" type="int" />
+<column name="av_h_sub" type="float" />
+<column name="av_h_sub_EMEP" type="int" />
+<column name="U_sub"   type="float" />
+<column name="U_sub_EMEP" type="int" />
+<column name="wind_dir_sub" type="float" />
+<column name="wind_dir_sub_EMEP" type="int" />
+</entity>
 
 </service-builder>

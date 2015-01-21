@@ -11,14 +11,12 @@
 		<portlet-name>SmartSMEAR</portlet-name>
 		<display-name>SmartSmearUI</display-name>
 		<portlet-class>com.vaadin.server.VaadinPortlet</portlet-class>
+        
         <init-param>
             <name>UIProvider</name>
-            <value>fi.csc.smear.smartsmear.SmearUIProvider</value>
+            <value>fi.csc.avaa.smear.smartsmear.SmearUIProvider</value>
         </init-param>
-	<!--init-param>
-            <name>style</name>
-            <value>width: 920px</value>
-        </init-param-->
+        
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
@@ -35,7 +33,7 @@
 		<portlet-preferences>
 			<preference>
 				<name>maxScope</name>
-				<value>92</value>
+				<value>183</value>
 				<read-only>false</read-only>
 			</preference>
 		</portlet-preferences>
