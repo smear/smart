@@ -11,20 +11,20 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+/*import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;*/
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Tree;
+//import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.HorizontalLayout;
+/*import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator;
 import com.vaadin.ui.Component;
 import com.vaadin.data.Container;
-import com.vaadin.data.Item;
+import com.vaadin.data.Item;*/
 import com.vaadin.data.util.HierarchicalContainer;
-import com.vaadin.data.util.ObjectProperty;
+/*import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
-import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.PopupDateField;*/
 
 import fi.csc.smear.db.model.SmearTableMetadata;
 import fi.csc.smear.db.model.SmearVariableMetadata;
@@ -52,14 +52,14 @@ public class Station  {
 	public static final int STATIONS = 7; //bigest station no + 1
 	//private static final String TABLES[] = {"", "VAR_META", "HYY_META", "", "KUM_META"};
 	public static final String ASEMAT[] = {Hyytiälä, Kumpula, Värriö, Siikaneva1, Siikaneva2, Torni};	
-	public static final String TAULUT[][] = {{"HYY_META", "HYY_EDDY233", "HYY_EDDYTOW", "HYY_EDDYSUB", "HYY_DMPS"}, 
+	public static final String TAULUT[][] = {{"HYY_META", "HYY_EDDY233", "HYY_EDDYTOW", "HYY_EDDYSUB", "HYY_DMPS", "HYY_AERO"}, 
 		{"KUM_META", "KUM_EDDY", "KUM_DMPS"}, {"VAR_META", "VAR_TREE", "VAR_EDDY", "VAR_DMPS"}, 
 		{"SII1_META", "SII1_EDDY"},{"SII2_META", "SII2_EDDY"},{"TOR_EDDY"}};
 	public static final String DESCRIPTION = "description";
 	public static final String TITLE = "title";
 	public static final String UNIT = "unit";
 	public static final String SOURCE = "source";
-	private static final Date START = new Date(91,5,1);
+	//private static final Date START = new Date(91,5,1);
 	VerticalLayout stationselection;
 	//private HorizontalLayout dayselection;
         //private VerticalLayout variableselection; //findbug

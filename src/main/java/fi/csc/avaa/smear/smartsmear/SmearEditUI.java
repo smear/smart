@@ -15,7 +15,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Label;
 
 public class SmearEditUI extends UI {
 	private static final long serialVersionUID = 3079770321922379009L;

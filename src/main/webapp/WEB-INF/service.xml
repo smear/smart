@@ -1485,4 +1485,11 @@
 <column name="wind_dir_sub_EMEP" type="int" />
 </entity>
 
+<entity name="HyyAero" table="HYY_AERO" local-service="true" remote-service="true" data-source="smear" session-factory="smearSessionFactory">
+<column name="samptime"  type="Date" primary="true" />  
+<column name="cn" type="float" />  
+<column name="cn_t" type="float" />
+<column name="cn_p" type="float" />
+</entity>
+
 </service-builder>

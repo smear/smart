@@ -240,9 +240,9 @@ public class Download {
 					sb.append(rsmd.getColumnLabel(i));
 					// find order to match variable with metadata
 					for (int varmet = 0; varmet < metadata_var.length; varmet++){
-						//System.out.println("Verrataan datasta "+rsmd.getColumnLabel(i)+" ja metasta "+metadata_var[varmet]);
+						System.out.println("Verrataan datasta "+rsmd.getColumnLabel(i)+" ja metasta "+metadata_var[varmet]);
 						if (rsmd.getColumnLabel(i).equals(metadata_var[varmet])){
-							//System.out.println("Löytyi");
+							System.out.println("Löytyi");
 							order[i-2] = varmet;
 						}
 					}

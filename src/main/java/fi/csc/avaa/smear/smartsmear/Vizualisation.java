@@ -21,12 +21,12 @@ import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.server.Page;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.Component;
+//import com.vaadin.server.Page;
+//import com.vaadin.server.Sizeable.Unit;
+//import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Notification;
+//import com.vaadin.ui.Notification;
 import com.vaadin.ui.Tree;
 import com.vaadin.addon.charts.model.style.SolidColor;
 
@@ -601,8 +601,8 @@ public class Vizualisation  implements java.io.Serializable {
 	}
 
 	HorizontalLayout[] plotVariables(Set<String> set, Tree t, HierarchicalContainer treecontainer,  Download dl) {
-		int ch = 0;
-		String stationstr = "";
+		//int ch = 0;
+		//String stationstr = "";
 		HorizontalLayout[] rows = new HorizontalLayout[ROWS];
 		for (int i = 0; i < ROWS; i++) {
 			rows[i]= createVizLayout();

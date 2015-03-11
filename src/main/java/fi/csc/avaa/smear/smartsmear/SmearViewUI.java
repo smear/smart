@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+//import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.ui.AbstractSelect;
 /*import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
@@ -122,8 +124,8 @@ import com.vaadin.ui.Notification.Type;
 @Theme("liferay")
 public class SmearViewUI extends UI {
 	
-	@WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = SmearViewUI.class)
+	@WebServlet(value = "/VAADIN/*", asyncSupported = true)
+    @VaadinServletConfiguration(productionMode = true, ui = SmearViewUI.class)
     public static class Servlet extends VaadinServlet {
     }
 	
@@ -203,11 +205,12 @@ public class SmearViewUI extends UI {
 	tree.setMultiSelect(true);
 	tree.setNullSelectionAllowed(false);
 	tree.setImmediate(true);
-	tree.addListener(new ItemClickEvent.ItemClickListener() {
+	tree.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 
 		public void itemClick(ItemClickEvent event) {
 		    tree.expandItem(event.getItemId());
-		    tree.requestRepaint();
+		    //tree.requestRepaint();
+		    tree.markAsDirty();
 		}
 	    });
 		
@@ -244,23 +247,23 @@ public class SmearViewUI extends UI {
 		    treecontainer.addContainerProperty(SOURCE, String.class, "");
 		    treecontainer.addContainerProperty(AVAILABLE, String.class, "");
 		    tree.setItemCaptionPropertyId(TITLE);
-		    tree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_PROPERTY);
+		    tree.setItemCaptionMode( AbstractSelect.ItemCaptionMode.PROPERTY );
 
 		    /* Vaikeuksia, ajonaikanen null-poikkeus
 		     */
 		    try {
-			asema.getItemProperty(DESCRIPTION).setValue(" ");
-			asema.getItemProperty(TITLE).setValue(Station.ASEMAT[i]);
-			asema.getItemProperty(UNIT).setValue(" ");
-			asema.getItemProperty(SOURCE).setValue(" ");
-			asema.getItemProperty(AVAILABLE).setValue(" ");						
+		    	asema.getItemProperty(DESCRIPTION).setValue(" ");
+		    	asema.getItemProperty(TITLE).setValue(Station.ASEMAT[i]);
+		    	asema.getItemProperty(UNIT).setValue(" ");
+		    	asema.getItemProperty(SOURCE).setValue(" ");
+		    	asema.getItemProperty(AVAILABLE).setValue(" ");						
 		    } catch (Exception e) {
-			asema = new PropertysetItem();
-			asema.addItemProperty(DESCRIPTION, new ObjectProperty<String>(" ", String.class));
-			asema.addItemProperty(TITLE, new ObjectProperty<String>(Station.ASEMAT[i], String.class));
-			asema.addItemProperty(UNIT, new ObjectProperty<String>(" ", String.class));
-			asema.addItemProperty(SOURCE, new ObjectProperty<String>(" ", String.class));
-			asema.addItemProperty(AVAILABLE, new ObjectProperty<String>(" ", String.class));
+		    	asema = new PropertysetItem();
+		    	asema.addItemProperty(DESCRIPTION, new ObjectProperty<String>(" ", String.class));
+		    	asema.addItemProperty(TITLE, new ObjectProperty<String>(Station.ASEMAT[i], String.class));
+		    	asema.addItemProperty(UNIT, new ObjectProperty<String>(" ", String.class));
+		    	asema.addItemProperty(SOURCE, new ObjectProperty<String>(" ", String.class));
+		    	asema.addItemProperty(AVAILABLE, new ObjectProperty<String>(" ", String.class));
 		    }
 		    //System.out.println("Aseman title on :"+asema.getItemProperty(TITLE));
 		    //Item table = treecontainer.addItem(tablename);
@@ -273,90 +276,90 @@ public class SmearViewUI extends UI {
 		    //table.addItemProperty(TITLE, new ObjectProperty<String>(tablename, String.class));
 		    //treecontainer.setParent(tablename, Station.ASEMAT[i]);
 		    for (SmearVariableMetadata meta: mdata) {
-			String variable = meta.getVariable();
-			String variable_id = variable+":"+tablename;
-			//System.out.println("Variable "+variable_id);
-			treecontainer.removeItem(variable_id);
-			String description = meta.getDescription();
-			String unit = meta.getUnit();
-			String title = meta.getTitle();
-			//System.out.println("Title "+title);
-			String source = meta.getSource();
-			Date started = meta.getPeriod_start();
-			String available="";
-			if (!String.valueOf(started.getTime()).equals("0000-00-00 00:00:00")){
-			    try{
-				Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-				available = formatter.format(started);
-			    }catch (Exception edate) {
-				System.out.println("Exception in "+variable+" available");
-				available = "Not found";
-			    }
-			} else {
-			    System.out.println("Variable has 0000-00-00 00:00:00 timestamp");
-			}
-			String cat = meta.getCategory();
-			//System.out.println("Category "+cat);
-			String categoryitem = Station.ASEMAT[i]+cat;
-			//System.out.println("Muuttujalla " +variable+ " löytyy dataa alkaen " +started.getTime()+ " ja se kuuluu kategoriaan: "+cat);
-			//System.out.println("Aikaikkunan aloitus on " +start.getTime());
-			// Availeble 9999-09-09 is not supposed to be in tree
-			if (!available.equals("9999-09-09")){
-			    //System.out.println("Dataa löytyy");
+		    	String variable = meta.getVariable();
+		    	String variable_id = variable+":"+tablename;
+		    	//System.out.println("Variable "+variable_id);
+		    	treecontainer.removeItem(variable_id);
+		    	String description = meta.getDescription();
+		    	String unit = meta.getUnit();
+		    	String title = meta.getTitle();
+		    	//System.out.println("Title "+title);
+		    	String source = meta.getSource();
+		    	Date started = meta.getPeriod_start();
+		    	String available="";
+		    	if (!String.valueOf(started.getTime()).equals("0000-00-00 00:00:00")){
+		    		try{
+		    			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		    			available = formatter.format(started);
+		    		}catch (Exception edate) {
+		    			System.out.println("Exception in "+variable+" available");
+		    			available = "Not found";
+		    		}
+		    	} else {
+		    		System.out.println("Variable has 0000-00-00 00:00:00 timestamp");
+		    	}
+		    	String cat = meta.getCategory();
+		    	//System.out.println("Category "+cat);
+		    	String categoryitem = Station.ASEMAT[i]+cat;
+		    	//System.out.println("Muuttujalla " +variable+ " löytyy dataa alkaen " +started.getTime()+ " ja se kuuluu kategoriaan: "+cat);
+		    	//System.out.println("Aikaikkunan aloitus on " +start.getTime());
+		    	// Availeble 9999-09-09 is not supposed to be in tree
+		    	if (!available.equals("9999-09-09")){
+		    		//System.out.println("Dataa löytyy");
 
-			    Item variable_item = treecontainer.addItem(variable_id);
-			    Item category = treecontainer.addItem(categoryitem);
-			    //System.out.println("Luotiin kategoria " +categoryitem);
-			    try {
-				category.getItemProperty(DESCRIPTION).setValue(" ");
-				category.getItemProperty(TITLE).setValue(cat);
-				category.getItemProperty(UNIT).setValue(" ");
-				category.getItemProperty(SOURCE).setValue(" ");
-				category.getItemProperty(AVAILABLE).setValue(" ");
-			    } catch (Exception e) {	
-				category = new PropertysetItem();
-				category.addItemProperty(DESCRIPTION, new ObjectProperty<String>(" ", String.class));
-				category.addItemProperty(TITLE, new ObjectProperty<String>(cat, String.class));
-				category.addItemProperty(UNIT, new ObjectProperty<String>(" ", String.class));
-				category.addItemProperty(SOURCE, new ObjectProperty<String>(" ", String.class));
-				category.addItemProperty(AVAILABLE, new ObjectProperty<String>(" ", String.class));
-			    }
-			    //category.getItemProperty(TITLE).setValue(cat);
-			    //treecontainer.setParent(categoryitem,tablename);
-			    treecontainer.setParent(categoryitem,Station.ASEMAT[i]);
-			    //System.out.println("Liitettiin kategoria "+categoryitem+" Asemaan "+ ASEMAT[i]);
-			    treecontainer.setParent(variable_id,categoryitem);
-			    treecontainer.setChildrenAllowed(variable_id, false);
-			    try{
-				if (exist(description)) {
-				    variable_item.getItemProperty(DESCRIPTION).setValue(description);
-				} else {
-				    variable_item.getItemProperty(DESCRIPTION).setValue("No meta");
-				}
-				if (exist(title)) { 
-				    variable_item.getItemProperty(TITLE).setValue(title);
-				} else {
-				    variable_item.getItemProperty(TITLE).setValue("No title");
-				}
-				if (exist(unit)){
-				    variable_item.getItemProperty(UNIT).setValue(unit);
-				} else {
-				    variable_item.getItemProperty(UNIT).setValue("No unit");
-				}
-				if (exist(source)) {
-				    variable_item.getItemProperty(SOURCE).setValue(source);
-				} else {
-				    variable_item.getItemProperty(SOURCE).setValue("No source");
-				}
-				if (started != null || !String.valueOf(started).equals("0000-00-00 00:00:00")) {
-				    variable_item.getItemProperty(AVAILABLE).setValue(available);
-				} else {
-				    variable_item.getItemProperty(AVAILABLE).setValue("No start");
-				}
-			    } catch (Exception e) {
-				System.out.println("Catched " + e);
-			    }
-			}
+		    		Item variable_item = treecontainer.addItem(variable_id);
+		    		Item category = treecontainer.addItem(categoryitem);
+		    		//System.out.println("Luotiin kategoria " +categoryitem);
+		    		try {
+		    			category.getItemProperty(DESCRIPTION).setValue(" ");
+		    			category.getItemProperty(TITLE).setValue(cat);
+		    			category.getItemProperty(UNIT).setValue(" ");
+		    			category.getItemProperty(SOURCE).setValue(" ");
+		    			category.getItemProperty(AVAILABLE).setValue(" ");
+		    		} catch (Exception e) {	
+		    			category = new PropertysetItem();
+		    			category.addItemProperty(DESCRIPTION, new ObjectProperty<String>(" ", String.class));
+		    			category.addItemProperty(TITLE, new ObjectProperty<String>(cat, String.class));
+		    			category.addItemProperty(UNIT, new ObjectProperty<String>(" ", String.class));
+		    			category.addItemProperty(SOURCE, new ObjectProperty<String>(" ", String.class));
+		    			category.addItemProperty(AVAILABLE, new ObjectProperty<String>(" ", String.class));
+		    		}
+		    		//category.getItemProperty(TITLE).setValue(cat);
+		    		//treecontainer.setParent(categoryitem,tablename);
+		    		treecontainer.setParent(categoryitem,Station.ASEMAT[i]);
+		    		//System.out.println("Liitettiin kategoria "+categoryitem+" Asemaan "+ ASEMAT[i]);
+		    		treecontainer.setParent(variable_id,categoryitem);
+		    		treecontainer.setChildrenAllowed(variable_id, false);
+		    		try{
+		    			if (exist(description)) {
+		    				variable_item.getItemProperty(DESCRIPTION).setValue(description);
+		    			} else {
+		    				variable_item.getItemProperty(DESCRIPTION).setValue("No meta");
+		    			}
+		    			if (exist(title)) { 
+		    				variable_item.getItemProperty(TITLE).setValue(title);
+		    			} else {
+		    				variable_item.getItemProperty(TITLE).setValue("No title");
+		    			}
+		    			if (exist(unit)){
+		    				variable_item.getItemProperty(UNIT).setValue(unit);
+		    			} else {
+		    				variable_item.getItemProperty(UNIT).setValue("No unit");
+		    			}
+		    			if (exist(source)) {
+		    				variable_item.getItemProperty(SOURCE).setValue(source);
+		    			} else {
+		    				variable_item.getItemProperty(SOURCE).setValue("No source");
+		    			}
+		    			if (started != null || !String.valueOf(started).equals("0000-00-00 00:00:00")) {
+		    				variable_item.getItemProperty(AVAILABLE).setValue(available);
+		    			} else {
+		    				variable_item.getItemProperty(AVAILABLE).setValue("No start");
+		    			}
+		    		} catch (Exception e) {
+		    			System.out.println("Catched " + e);
+		    		}
+		    	}
 			tree.setContainerDataSource(treecontainer);							
 			//}         
 			//else {
@@ -408,7 +411,7 @@ public class SmearViewUI extends UI {
 	//startdate.setWidth(WIDTH);
 	startdate.setAssistiveText("University of Helsinki - Division of Atmospheric Sciences."); //sivun alareunassa "Arrow down key opens calendar element for choosing the date"
 	startdate.setLocale(new Locale("en", "US"));
-	final Date minValue = new Date(96,1,1);
+	final Date minValue = new GregorianCalendar(1996,1,1).getTime();
 	startdate.setValue(getModifiedDate(calendar.getTime(), -1));
 	Station.setFrom(startdate.getValue());
 	startdate.setImmediate(true);
@@ -426,11 +429,12 @@ public class SmearViewUI extends UI {
 		    } catch (Exception e) {
                 	new Notification("Invalid To-date",
 					 "<br/>To-date should be set between 1991-01-01 and today",
-					 Notification.TYPE_WARNING_MESSAGE, true)
+					 Notification.Type.WARNING_MESSAGE, true)
 			    .show(Page.getCurrent());
                 	startdate.setValue(getModifiedDate(calendar.getTime(), -1));
                 	enddate.setValue(calendar.getTime());
-			enddate.requestRepaint();
+			//enddate.requestRepaint();
+			enddate.markAsDirty();
 		    }
 		    try {
 			enddate.removeAllValidators();
@@ -440,7 +444,7 @@ public class SmearViewUI extends UI {
 		    } catch (Exception e) {
                 	new Notification("Timewindow exceeds "+maxTimeWindow+" days",
 					 "<br/>From-date adjusted to allowed timewindow",
-					 Notification.TYPE_WARNING_MESSAGE, true)
+					 Notification.Type.WARNING_MESSAGE, true)
 			    .show(Page.getCurrent());
                 	if ((getModifiedDate(startdate.getValue(), -(maxTimeWindow-1))).before(minValue)){
 			    startdate.setValue(minValue);
@@ -448,11 +452,13 @@ public class SmearViewUI extends UI {
                 	else {
 			    startdate.setValue(getModifiedDate(enddate.getValue(), -(maxTimeWindow-1)));
                 	}
-			startdate.requestRepaint();
+			//startdate.requestRepaint();
+                startdate.markAsDirty();   	
 		    }
 		    Station.setFrom(startdate.getValue());
 		    tree.markAsDirty();
-		    tree.requestRepaint();
+		    //tree.requestRepaint();
+		    tree.markAsDirty();
 		}
 	    };
         final ValueChangeListener changeValueListener_from = new ValueChangeListener() {
@@ -470,7 +476,7 @@ public class SmearViewUI extends UI {
 			    .show(Page.getCurrent());
                 	startdate.setValue(getModifiedDate(calendar.getTime(), -1));
                 	enddate.setValue(calendar.getTime());
-			startdate.requestRepaint();
+			startdate.markAsDirty();
 		    }
 		    try {
 			startdate.removeAllValidators();
@@ -488,11 +494,11 @@ public class SmearViewUI extends UI {
                 	else {
 			    enddate.setValue(calendar.getTime());
                 	}
-			enddate.requestRepaint();
+			enddate.markAsDirty();
 		    }
 		    Station.setFrom(startdate.getValue());
 		    tree.markAsDirty();
-		    tree.requestRepaint();
+		    tree.markAsDirty();
 		}
 	    };
         startdate.addValueChangeListener(changeValueListener_from);
@@ -841,22 +847,22 @@ public class SmearViewUI extends UI {
 
 			// Center it in the browser window
 			subWindow.center();
-			subWindow.addListener(new Window.CloseListener() {
+			subWindow.addCloseListener(new Window.CloseListener() {
 				public void windowClose(CloseEvent ce) {
-				    try{
-					if ((String)tf.getValue() == ""){ 
-					    tf.setValue("Someone");
-					}
-					contact_email = (String)tf.getValue();
-					Tree t2 = (Tree)variableselection.getComponent(0);
-					final Set<String> set3 = (Set<String>)t2.getValue();
-					portletPreferences.setValue(CONTACT_EMAIL,portletPreferences.getValue(CONTACT_EMAIL, "")+ "\n\n"+calendar.getTime()+"  "+contact_email+ " downloaded "+set3+ " Starting from: "+startdate.getValue()+ " To: "+enddate.getValue());
-					portletPreferences.store();
-				    } catch(InvalidValueException ex){
-					Notification.show(ex.getMessage(), Type.ERROR_MESSAGE);
-				    } catch(Exception e) {
-					Notification.show("Failed to save preference value", Type.ERROR_MESSAGE);
-				    } 
+					try{
+						if ((String)tf.getValue() == ""){ 
+							tf.setValue("Someone");
+						}
+						contact_email = (String)tf.getValue();
+						Tree t2 = (Tree)variableselection.getComponent(0);
+						final Set<String> set3 = (Set<String>)t2.getValue();
+						portletPreferences.setValue(CONTACT_EMAIL,portletPreferences.getValue(CONTACT_EMAIL, "")+ "\n\n"+calendar.getTime()+"  "+contact_email+ " downloaded "+set3+ " Starting from: "+startdate.getValue()+ " To: "+enddate.getValue());
+						portletPreferences.store();
+					} catch(InvalidValueException ex){
+						Notification.show(ex.getMessage(), Type.ERROR_MESSAGE);
+					} catch(Exception e) {
+						Notification.show("Failed to save preference value", Type.ERROR_MESSAGE);
+					} 
 				}
 			    });
 			// Open it in the UI
@@ -891,15 +897,17 @@ public class SmearViewUI extends UI {
 	layout.addComponent(middlesection);
 	//layout.addComponent(bottompart);
     }
+    
     /**
      * Because called from HDF5, station is ignored, because vmdata is set by table
      *  
-     * @param station ignored now
+     * 
      * @return List<SmearVariableMetadata>
      */
-    public static List<SmearVariableMetadata> getMetadataInStation(int station) {
-	return vmdata;
+    public static List<SmearVariableMetadata> getMetadata() {
+    	return vmdata;
     }
+    
     public void updateVizualisation(final PopupDateField start, final PopupDateField end, final VerticalLayout middlesection, final VerticalLayout variableselection, Download dl) { 
 	//Vizualisation viz = new Vizualisation(start.getValue(), end.getValue());
 	PopupDateField endt = new PopupDateField();
@@ -947,14 +955,14 @@ public class SmearViewUI extends UI {
     }
 
     String csvsoi(Date ft) {
-	final String COMMASEPARATED = "yyyy,MM,dd,HH";
-	DateFormat fnf = new SimpleDateFormat(COMMASEPARATED);
-	try{
-	    return fnf.format(ft);
-	} catch(java.lang.NullPointerException enu) {
-	    System.err.println("Null pointer Exception");
-	    return "No valid time";
-	}
+    	final String COMMASEPARATED = "yyyy,MM,dd,HH";
+    	DateFormat fnf = new SimpleDateFormat(COMMASEPARATED);
+    	try{
+    		return fnf.format(ft);
+    	} catch(java.lang.NullPointerException enu) {
+    		System.err.println("Null pointer Exception");
+    		return "No valid time";
+    	}
     }
 
     /**

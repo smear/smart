@@ -3,9 +3,9 @@
  */
 package fi.csc.avaa.smear.smartsmear;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.SQLException;
 /*import java.util.Properties;
 
@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;*/
 import javax.sql.DataSource;
 
-import fi.csc.smear.db.service.VarriometaLocalServiceUtil;
+//import fi.csc.smear.db.service.VarriometaLocalServiceUtil;
 import fi.csc.smear.db.service.persistence.VarriometaPersistence;
 import fi.csc.smear.db.service.persistence.VarriometaUtil;
 

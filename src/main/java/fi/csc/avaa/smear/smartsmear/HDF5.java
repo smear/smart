@@ -70,7 +70,7 @@ public class HDF5 implements Runnable{
 		this.start = start;
 		this.end = end;
 		this.stationno = station;
-		this.mdata = SmearViewUI.getMetadataInStation(station);
+		this.mdata = SmearViewUI.getMetadata();
 		//this.stations = stations;
 		this.avg = avg;
 		this.typeOfAVG = typeOfAVG;
