@@ -1,14 +1,10 @@
 package fi.csc.avaa.smear.smartsmear;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.Iterator;
 
 import ncsa.hdf.hdf5lib.H5;
 import ncsa.hdf.hdf5lib.HDF5Constants;
@@ -20,17 +16,12 @@ import ncsa.hdf.object.Group;
 import ncsa.hdf.object.h5.H5File;
 
 import com.vaadin.ui.ComboBox;
-/*import com.vaadin.ui.Tree;
-
-import fi.csc.smear.db.model.Hydemeta;
-import fi.csc.smear.db.model.Kumpulameta;*/
-import fi.csc.smear.db.model.SmearVariableMetadata;
 //import fi.csc.smear.db.model.Varriometa;
 /**
  * write HDF5 file
  *  CLASSPATH jhdf5obj.jar:jhdf5.jar:jhdfobj.jar:
  *
- * Copyright (c) CSC 2012, 2013, 2014
+ * Copyright (c) CSC 2012, 2013, 2014, 2015
  * @author Pekka Järveläinen
  */
 public class HDF5 implements Runnable{
@@ -45,10 +36,10 @@ public class HDF5 implements Runnable{
 	private Thread thr; 
 	private Date start; 
 	private Date end;
-	private Download dl;
-	private ResultSet data;
+	//private Download dl;
+	private Data data;
 	private int stationno;
-	private List<SmearVariableMetadata> mdata;
+	private Metadata mdata;
 	private File file;	
 	H5File h5f;
 	String stationname = "";
@@ -56,25 +47,18 @@ public class HDF5 implements Runnable{
 	DateFormat formatter = new SimpleDateFormat(ISO8601);
 	DateFormat fnf = new SimpleDateFormat(Download.FILENAMEFORMAT);
 	//Columns columns = null;	
-	Hashtable<String, String> httitle = new  Hashtable<String, String>();
-    //private Station stations;
-	private Hashtable<String, String> htunit = new  Hashtable<String, String>();
-	private int avg;
-	private ComboBox typeOfAVG;
-	private float[][] keskirarvoistettufa;
-	//private Tree tree;
 	
+	private ComboBox typeOfAVG;
+		
 	public HDF5(Download dl, Date start, Date end, int station, int avg, ComboBox typeOfAVG) {
-		this.dl = dl;	
+		//this.dl = dl;	
 		this.data = dl.data;
 		this.start = start;
 		this.end = end;
 		this.stationno = station;
-		this.mdata = SmearViewUI.getMetadata();
-		//this.stations = stations;
-		this.avg = avg;
+		this.mdata = SmearViewUI.getMetadata();	
+		//this.avg = avg;
 		this.typeOfAVG = typeOfAVG;
-		//this.tree = tree;
 		thr = new Thread(this);
 		/*if (null == fileFormat) {
 			fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
@@ -99,12 +83,7 @@ public class HDF5 implements Runnable{
 		thr.start();
 	}
 	
-	public void run() {
-		for (int i = 0; i < mdata.size(); i++) {
-			SmearVariableMetadata vm = mdata.get(i);
-			httitle.put(vm.getVariable(), vm.getTitle());
-			htunit.put(vm.getVariable(), vm.getUnit());
-		}
+	public void run() {	
 		
 		try {
 			FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
@@ -142,74 +121,31 @@ public class HDF5 implements Runnable{
 		    Datatype isodate =  h5f.createDatatype(CLSTRING, SAMTIMELENGTH, Datatype.NATIVE, Datatype.NATIVE);
 		    Datatype meteocode =  h5f.createDatatype(CLSTRING, 3, Datatype.NATIVE, Datatype.NATIVE);
 		    Datatype nativefloat = h5f.createDatatype(Datatype.CLASS_FLOAT, 4, Datatype.NATIVE, Datatype.NATIVE);
-		    ResultSetMetaData rsmd = data.getMetaData();
-		    int cc = rsmd.getColumnCount();
-		    long t1=0, t2 = 0;
-		    Dataset dataset;
-		    String samptimes[];
-		    float fa[][];
-		    String nws[];
+		    
 		    long  dims[] = new long[1];
-		    int rows;
-		    int n = 0;
-		    synchronized(dl.data) {
-			data.last();
-			rows = data.getRow();
+		    Dataset dataset = h5f.createScalarDS(DB.SAMPTIME, station, isodate, dims, null, null, GZIPNO, data.getSamptimes());
+		    if (null == dataset) { System.out.println("NULLdataset"); }
+		    dataset.write(data.getSamptimes());
+		   
+		    int rows = data.getSamptimes().length;
 			dims[0] =  rows ;
-			samptimes = new String[rows+1];
-			nws = new String[rows+1];
-			fa = new float[cc][rows+1]; 
-		    	data.beforeFirst();
-		    	try {
-		    		int j=0; //row
-		    		while (data.next()) {
-		    			samptimes[j++] = data.getString(1);
-		    			if (1 == j) {
-		    				t1 = data.getTimestamp(1).getTime();
-		    			}
-		    			if (2 == j) {
-		    				t2 = data.getTimestamp(1).getTime();
-		    			}
-		    			//data.getFloat(columnIndex);
-		    			for (int i = 2; i < cc; i++) {
-		    				try {
-		    					fa[i][j] = data.getFloat(i);
-		    					if (data.wasNull()) {
-		    						fa[i][j] = Float.NaN;
-		    					}
-		    				} catch ( java.sql.SQLException e) {
-		    					nws[j] = data.getString(i);
-		    					n=i;
-		    				} catch (  java.lang.ArrayIndexOutOfBoundsException e) {
-		    					System.err.println("i="+i+" j="+j);
-		    					e.printStackTrace();
-		    					System.err.println("rows="+rows+" cols="+cc);
-		    				}
-		    			}
+		    Iterator<String> iter = data.tableset.iterator();
+		    while( iter.hasNext()) {
+		    	String taulunnimi = (String)iter.next();
+		    	float[][] fa = data.getFtaulu(taulunnimi);
+		    	//int cc = fa.length;
+		    	String[] ColumnNames =  data.getLabels(taulunnimi);
+		    	if (null != ColumnNames) {
+		    		int cc = ColumnNames.length;
+		    		System.out.println("HDFsarakkeet: "+cc);
+		    		for (int i = 0; i < cc; i++) {		    	
+		    			createAndWriteDS(ColumnNames[i], station, nativefloat, dims,  fa[i]);								
 		    		}
-		    	} catch ( java.sql.SQLException e) {
-		    		e.printStackTrace();
 		    	}
 		    }
-		    dataset = h5f.createScalarDS(rsmd.getColumnName(1), station, isodate, dims, null, null, GZIPNO, samptimes);
-		    if (null == dataset) { System.out.println("NULLdataset"); }
-		    dataset.write(samptimes);
-		    keskirarvoistettufa = keskiarvotus(fa, cc, rows, t2-t1 /(1000*60));		    
-		    for (int i = 2; i < cc; i++) {		    	
-				createAndWriteDS(rsmd.getColumnName(i), station, nativefloat, dims,  fa[i]);								
-		    }
-		    /*
-					String[] c = columns.getNames();
-			    	long interval = (hdata.get(1).getSamptime().getTime() - hdata.get(0).getSamptime().getTime())/(1000*60);
-					fa = keskiarvotus(fa, columns.getCount(), data.size(), interval);
-					dims[0] = fa[1].length;
-					for (int i = 1 ; i < columns.getCount() ; i++) {
-						createAndWriteDS(c[i], station, nativefloat, dims,  fa[i]);
-					}
-		     */
-		    if (n > 0) {
-		    	dataset = h5f.createScalarDS(rsmd.getColumnName(n), station, meteocode, dims, null, null, GZIPNO, nws);		    	
-		    	//createAndWriteDS(rsmd.getColumnName(n), station, meteocode, dims,  nws);
+		    String nws[] = data.getNWS();
+		    if (null != nws) {
+		    	dataset = h5f.createScalarDS(data.getNWSname(), station, meteocode, dims, null, null, GZIPNO, nws);		    			    
 		    	dataset.write(nws);
 		    }
 		    h5f.close();
@@ -227,44 +163,24 @@ public class HDF5 implements Runnable{
 	}
 
    
-	private float[][] keskiarvotus(float[][] fa, int count, int size, long interval ) {
-	    //Boolean geom = false; // findbug: täyttyy testata
-		Boolean median = false;
-		int average = 0;
-		if ((avg > 0) && (interval > 0)) {
-			median = typeOfAVG.getValue().equals(Download.MEDIAN) ? true : false;
-			average = (int) (avg/interval);
-		}
-
-		for (int i = 0 ; i < count ; i++) {
-			if (average > 1) {
-				int dims = size/average;
-				float[] f =  new float[dims];
-				int l = 0;
-				for (int k = 0; k+average < size; k = k + average) {
-					if (median) {
-						float a[] = new float[average];
-						int m = 0;
-						for (int j = k; j < k+average; j++) {
-							a[m++] = fa[i][j];
-						}
-						Arrays.sort(a);
-						f[l++] = a[average/2];
-					} 
-				}
-				fa[i] = f;
-			}
-		}	
-		return fa;
-	}
 	
+	/**
+	 * Kirjoittaa Vektorin HDF5 tiedostoon.
+	 * Taulu parametrin voisi lisätä.
+	 * 
+	 * @param name	Tietokantasarakkeen nimi
+	 * @param station	Group (HDF5)
+	 * @param nativefloat Datatype (HDF5)
+	 * @param dims 	long [] yksiulotteinen: dims[0] =  rows ;
+	 * @param fa	float[] Tiedostoon kirjoitettava data
+	 */
 	private void createAndWriteDS(String name, Group station, Datatype nativefloat, long [] dims, float fa[]) {
 
 			Dataset dataset;
 			try {
 				dataset = h5f.createScalarDS(name, station, nativefloat, dims,
 						null, null, GZIPNO, fa);
-				metawrite(dataset, clean(name));
+				metawrite(dataset, data.clean(name));
 				dataset.write(fa);
 			} catch (ncsa.hdf.hdf5lib.exceptions.HDF5LibraryException e) {
 				System.err.println(e+" HDF5LibraryException: "+name);
@@ -274,18 +190,9 @@ public class HDF5 implements Runnable{
 
 	}
 	
-    private String clean(String s) {
-    	String clean = s; 
-    	if (s.startsWith("avg(") || s.startsWith("sum(")) {
-    		clean = s.substring(4, s.length()-1);
-    	} else if (s.startsWith(DB.GEOMETRIC)) {
-    		clean = s.substring(DB.GEOMETRIC.length(), s.length()-3); //lopusta poistetaan loppusulut
-    	}
-		return clean;
-	}
-
+   
 	private void metawrite(Dataset dataset, String name) {
-		String title = httitle.get(name);
+		String title = mdata.getHTtitle().get(name);
 		if (null != title) {
 			try {
 				dataset.writeMetadata(attribute("title", CLSTRING, title));
@@ -296,7 +203,7 @@ public class HDF5 implements Runnable{
 		} else {
 			System.err.println("There is no title for name "+name);
 		}
-		String unit = htunit.get(name);
+		String unit = mdata.getHTunit().get(name);
 		if (null != unit) {
 			try {
 				dataset.writeMetadata(attribute("unit", CLSTRING, unit));
@@ -344,13 +251,5 @@ public class HDF5 implements Runnable{
 	public File getFile() {
 		return file;
 	}
-	
-	/**
-	 * Tätä ei pidä kutsuman ennen kuin mediaani on laskettu, täytyisi varmaan lisätä synkrointia
-	 * @return float[][]
-	 */
-	public float[][] getMedian() {
-		return keskirarvoistettufa;
-	}
-	
+		
 }

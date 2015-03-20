@@ -3,20 +3,21 @@
  */
 package fi.csc.avaa.smear.smartsmear;
 
-//import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 //import java.lang.reflect.Method;
 //import java.lang.reflect.InvocationTargetException;
 
+
+
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-
 import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.HierarchicalContainer;
@@ -33,11 +34,6 @@ import com.vaadin.addon.charts.model.style.SolidColor;
 import fi.csc.smear.db.model.Hydemeta;
 import fi.csc.smear.db.model.Kumpulameta;
 import fi.csc.smear.db.model.Varriometa;
-import fi.csc.smear.db.model.Towermeta;
-import fi.csc.smear.db.model.Hyde_eddy233;
-import fi.csc.smear.db.model.Hyde_eddytow;
-import fi.csc.smear.db.model.Kumpula_eddy;
-import fi.csc.smear.db.model.Varrio_tree;
 import fi.csc.smear.db.service.HydemetaLocalServiceUtil;
 import fi.csc.smear.db.service.KumpulametaLocalServiceUtil;
 import fi.csc.smear.db.service.VarriometaLocalServiceUtil;
@@ -236,7 +232,11 @@ public class Vizualisation  implements java.io.Serializable {
 			item.getItemProperty(Timeline.PropertyId.TIMESTAMP).setValue(samptime);
 			item.getItemProperty(Timeline.PropertyId.VALUE).setValue(value);
 		} catch (java.lang.NullPointerException e) {
-			System.err.println(samptime + "was null: kesäaika");
+			if (null == samptime) {
+				//no debugging now
+			} else {
+				System.err.println(samptime + "was null: kesäaika");
+			}
 		}
 	}
 
@@ -601,149 +601,108 @@ public class Vizualisation  implements java.io.Serializable {
 	}
 
 	HorizontalLayout[] plotVariables(Set<String> set, Tree t, HierarchicalContainer treecontainer,  Download dl) {
-		//int ch = 0;
-		//String stationstr = "";
 		HorizontalLayout[] rows = new HorizontalLayout[ROWS];
 		for (int i = 0; i < ROWS; i++) {
 			rows[i]= createVizLayout();
 		}
-		/*if (null == dl ) 
-		loop:{
-			for (String variabsta:set){
-				String[] parts = variabsta.split(":");
-				String variab = parts[0];
-				Item v = treecontainer.getItem(variabsta);
+		// now we have dl and there is the data too
+		Data data = dl.getData();
+		try{	
+			int noc = data.getColumnCount(); //no of columns
+			int rc = noc > MAXNOVIZ ? MAXNOVIZ : noc ;  //real colums 
+			IndexedContainer[] ica = new IndexedContainer[rc];
+			for (int i = 0; i < rc; i++) {
+				ica[i] = createIndexedContainer();
+			}
+			String labels[] = new String[rc];
+			int l = 0; // lkm laskuri koti rc:tä
+			Iterator<String> iter = data.tableset.iterator();
+			while( iter.hasNext() && (l < rc)) {
+				String taulunnimi = iter.next();
+				float[][] faa = data.getFtaulu(taulunnimi);
+				Timestamp[] timestamps = data.getTimestamps();
+				int sarakkeet = faa.length;
+				int rivit = faa[0].length;
+				int ehto = sarakkeet < rc-l ?  sarakkeet : rc-l;
+				String Columnnames[] = data.getLabels(taulunnimi);
+				if (null == Columnnames) {
+					System.out.println("Ohitetaan ajanjaksolla tyhjä taulu: "+taulunnimi);
+				} else {
+					for (int i = 0; i < ehto ; i++) {
+						try {
+							labels[l+i] = Columnnames[i];
+							for (int j = 0; j < rivit; j++) {
+								addItem(ica[i], timestamps[j], faa[i][j]);
+							}	
+						} catch (  java.lang.ArrayIndexOutOfBoundsException e) {
+							System.err.println("ArrayIndexOutOfBoundsException: "+e.getMessage());
+							System.err.println("l="+l+", i="+i);
+						}
+					}
+					l = l + ehto;
+				}
+			}
+			Timeline[] tla = new Timeline[rc];
+			for (int i = 0; i < rc; i++) {
+				tla[i] = createTimeline(WIDTH, HEIGHT);
+				// vrealname = muuttujan nimi. Puun alkiot ovat muuttuja:taulu muotoa
+				String variab = labels[i];
+				String vrealname = data.clean(variab);
+				String stati = "";
+				Item v = null;
+				for (String variabsta:set){
+					String[] parts = variabsta.split(":");
+					String vartree = parts[0];
+					if (vartree.equals(vrealname)){
+						v = treecontainer.getItem(variabsta);
+						stati = parts[1].substring(0,3);
+					}
+				}
 				Object u = null;
-				try{
+				try {
 					u = v.getItemProperty(Station.UNIT).getValue();
-				} catch(java.lang.NullPointerException enu) {
-					System.err.println("Null pointer Exception");
+				} catch (java.lang.NullPointerException e) {
+					System.err.println("Null pointer Exception " + variab);
 				}
-					stationstr = (String)t.getParent((String)t.getParent(variabsta));
-					System.out.println("Station "+stationstr);
-				if (ch < 3){
-					rows[0].addComponent(plotVariable(variab,stationstr, String.valueOf(u)));
+				//stationstr = (String)t.getParent((String)t.getParent(vrealname));
+				//tla[i].setCaption(stationstr + "  " + vrealname); //variable
+				tla[i].setCaption(vrealname+":"+stati);
+				tla[i].addGraphDataSource(ica[i], Timeline.PropertyId.TIMESTAMP, Timeline.PropertyId.VALUE);
+				tla[i].setVerticalAxisLegendUnit(ica[i], String.valueOf(u));
+				tla[i].setGraphCaption(ica[i], variab);
+				tla[i].setGraphOutlineColor(ica[i], SolidColor.RED);
+				rows[i/VIZPERROW].addComponent(tla[i]);
+				if (rc == 1){
+					rows[0].getComponent(0).setWidth("600");
+					rows[0].getComponent(0).setHeight("450");
 				}
-				if (ch > 2 && ch < 6){
-					rows[1].addComponent(plotVariable(variab,stationstr, String.valueOf(u)));
-				}
-				if (ch > 5 && ch < 9){
-					rows[2].addComponent(plotVariable(variab,stationstr, String.valueOf(u)));
-				}
-				if (ch > 8) {
-					new Notification("Plotting only " +MAXNOVIZ+ " first variables",
-							"<br/>", Notification.TYPE_WARNING_MESSAGE, true)
-					.show(Page.getCurrent());
-					break loop;
-				}
-				ch++;
-			}
-			if (ch == 1){
-				rows[0].getComponent(0).setWidth("600");
-				rows[0].getComponent(0).setHeight("450");
-			}
-		} else { //loop */
-		
-			// now we have dl and there is the data too
-			ResultSet data = dl.getResultSet();
-			try{
-			try {
-				ResultSetMetaData rsmd = data.getMetaData();
-				int noc = rsmd.getColumnCount(); //no of columns
-				int rc = noc > MAXNOVIZ ? MAXNOVIZ + 1 : noc + 1;  //real colums 
-				IndexedContainer[] ica = new IndexedContainer[rc];
-				for (int i = 0; i < rc; i++) {
-					ica[i] = createIndexedContainer();
-				}
-				//rsmd.getColumnType(column);
-				synchronized(dl.data) { 
-					data.beforeFirst();
-					while (data.next()) {
-						for (int i = 2; i < rc; i++) {
-						    try {
-							float f = data.getFloat(i);
-							if (!data.wasNull()){
-								addItem(ica[i-2], data.getTimestamp(1), f);
-							}
-						    } catch ( java.sql.SQLException e) {
-							if (e.toString().startsWith("Invalid value for getFloat() - 'NUL'")) 
-							    System.err.println(e.toString());
-							else
-							    e.printStackTrace();
-						    }
-						}
-					}
-				}
-				Timeline[] tla = new Timeline[rc];
-				for (int i = 0; i < rc-2; i++) {
-					tla[i] = createTimeline(WIDTH, HEIGHT);
-					// vrealname = muuttujan nimi. Puun alkiot ovat muuttuja:taulu muotoa
-					String variab = rsmd.getColumnLabel(i+2);
-					String vrealname = clean(variab);
-					String stati = "";
-					Item v = null;
-					for (String variabsta:set){
-						String[] parts = variabsta.split(":");
-						String vartree = parts[0];
-						if (vartree.equals(vrealname)){
-							v = treecontainer.getItem(variabsta);
-							stati = parts[1].substring(0,3);
-						}
-					}
-					Object u = null;
-					try {
-					  u = v.getItemProperty(Station.UNIT).getValue();
-					} catch (java.lang.NullPointerException e) {
-						System.err.println("Null pointer Exception " + variab);
-					}
-					//stationstr = (String)t.getParent((String)t.getParent(vrealname));
-					//tla[i].setCaption(stationstr + "  " + vrealname); //variable
-					tla[i].setCaption(vrealname+":"+stati);
-					tla[i].addGraphDataSource(ica[i], Timeline.PropertyId.TIMESTAMP, Timeline.PropertyId.VALUE);
-					tla[i].setVerticalAxisLegendUnit(ica[i], String.valueOf(u));
-					tla[i].setGraphCaption(ica[i], variab);
-					tla[i].setGraphOutlineColor(ica[i], SolidColor.RED);
-					rows[i/VIZPERROW].addComponent(tla[i]);
-					if (rc-2 == 1){
-						rows[0].getComponent(0).setWidth("600");
-						rows[0].getComponent(0).setHeight("450");
-					}
-					if (rc-2 == 2){
-						rows[0].getComponent(0).setWidth("280");
-						rows[0].getComponent(0).setHeight("220");
-					}
-				}
-				if (rc-2 == 2){
+				if (rc == 2){
 					rows[0].getComponent(0).setWidth("280");
 					rows[0].getComponent(0).setHeight("220");
-					rows[0].getComponent(1).setWidth("280");
-					rows[0].getComponent(1).setHeight("220");
-				}
-			} catch ( java.sql.SQLException e) {
-				e.printStackTrace();
-			} catch (java.lang.NullPointerException e) {
-				if (null == data) {
-					System.err.println("Null pointer Exception because data was null");
-				} else {
-					System.err.println("data: "+ data);
 				}
 			}
-			} catch (java.lang.NullPointerException exx) {
-					System.err.println("Null pointer Exception");
+			if (rc == 2){
+				rows[0].getComponent(0).setWidth("280");
+				rows[0].getComponent(0).setHeight("220");
+				rows[0].getComponent(1).setWidth("280");
+				rows[0].getComponent(1).setHeight("220");
 			}
-		// } //else no dl
-		return rows;
-	}
 
-	private String clean(String variab) {
-		if (variab.startsWith("avg(") || variab.startsWith("sum(")) {
-			return variab.substring(4, variab.length()-1);			
-		} else if (variab.startsWith(DB.GEOMETRIC)) {
-			//System.out.println(variab.substring(DB.GEOMETRIC.length(), variab.length()-3));
-			return variab.substring(DB.GEOMETRIC.length(), variab.length()-3);
+		} catch (java.lang.NullPointerException e) {
+			if (null == data) {
+				System.err.println("Null pointer Exception because data was null");
+			} else {
+				System.err.println("datan rivit: "+ data.getRivienlkm());
+				e.printStackTrace();
+			}
+		} catch (  java.lang.ArrayIndexOutOfBoundsException e) {
+			System.err.println("ArrayIndexOutOfBoundsException: ");
+			e.printStackTrace();
 		}
-		return variab;
-	}
+	// } //else no dl
+	return rows;
+}
+
  
 	/**
 	 * HorizontalLayout with Margin and Spacing
