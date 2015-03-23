@@ -251,7 +251,7 @@ public class Download {
     						rivi[0].append(cn);
     						cn = data.clean(cn);
     						rivi[1].append(separator);
-    						rivi[1].append(mddesc.get(cn));
+    						rivi[1].append("\""+mddesc.get(cn)+"\"");
     									
     						rivi[2].append(separator);
     						rivi[2].append(metadata.getHTsource().get(cn));

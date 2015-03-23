@@ -358,7 +358,7 @@ public class SmearViewUI extends UI {
     								variable_item.getItemProperty(AVAILABLE).setValue("No start");
     							}
     						} catch (Exception e) {
-    							System.out.println("Catched " + e);
+    							System.out.println("Catched1 " + e);
     						}
     					}
     					tree.setContainerDataSource(treecontainer);							
@@ -412,7 +412,7 @@ public class SmearViewUI extends UI {
     	//startdate.setWidth(WIDTH);
     	startdate.setAssistiveText("University of Helsinki - Division of Atmospheric Sciences."); //sivun alareunassa "Arrow down key opens calendar element for choosing the date"
     	startdate.setLocale(new Locale("en", "US"));
-    	final Date minValue = new GregorianCalendar(1996,1,1).getTime();
+    	final Date minValue = new GregorianCalendar(1991,1,1).getTime();
     	startdate.setValue(getModifiedDate(calendar.getTime(), -1));
     	Station.setFrom(startdate.getValue());
     	startdate.setImmediate(true);
@@ -629,6 +629,7 @@ public class SmearViewUI extends UI {
     				dl = new Download(startdate.getValue(), enddate.getValue(), db, variableselection,metadata, avaraging, typeavaraging, String.valueOf(quality.getValue()));
     			} catch (Exception e) {
     				System.out.println("Catched " + e);
+    				e.printStackTrace();
     			}
     			if (null != dl){
     				if (!set2.isEmpty()){					

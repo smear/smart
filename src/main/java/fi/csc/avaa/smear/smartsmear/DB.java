@@ -30,8 +30,8 @@ public class DB {
 	public final static String SAMPTIME =  "samptime";
 	public final static String GEOMETRIC = "exp(avg(ln(";
 	private final static String CS = ", ";
-	private final static String[] AVG = {CS, CS+GEOMETRIC, CS+"avg(", CS+"sum("};
-	private final static String[] LOPPUSULUT = {"", ")))", ")", ")"};
+	private final static String[] AVG = {CS, CS+GEOMETRIC, CS+"avg(", CS+"sum(", CS};
+	private final static String[] LOPPUSULUT = {"", ")))", ")", ")", ""};
 	public final static int NONE = 0;
 	public final static int GEOM = 1;
 	public final static int MEAN = 2;
