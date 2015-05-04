@@ -146,7 +146,7 @@ public class DB {
 		    			samptimes[j] = rs.getString(1);		    			
 	    			}
 	    			//data.getFloat(columnIndex);
-	    			for (int i = 2; i < cc; i++) {
+	    			for (int i = 2; i <= cc; i++) {
 	    				data.sb.append(Download.separator);
 	    				try {
 	    					String v = rs.getString(i);
